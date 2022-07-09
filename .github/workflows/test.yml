@@ -1,25 +1,25 @@
-name: Testing on push
+# name: Testing on push
 
-on: push
+# on: push
 
-jobs:
-    test:
-        name: Test passes
-        runs-on: ubuntu-latest
-        env:
-            MONGO_USER: ${{secrets.MONGO_USER}}
-            PASSWORD: ${{secrets.PASSWORD}}
-            DBNAME: ${{secrets.DBNAME}}
-            TEST_DBNAME: ${{secrets.TEST_DBNAME}}
-            SECRET: ${{secrets.SECRET}}
-            CLUSTER: ${{secrets.CLUSTER}}
-        steps:
-            - name: Git checkout
-              uses: actions/checkout@v2
+# jobs:
+#     test:
+#         name: Test passes
+#         runs-on: ubuntu-latest
+#         env:
+#             MONGO_USER: ${{secrets.MONGO_USER}}
+#             PASSWORD: ${{secrets.PASSWORD}}
+#             DBNAME: ${{secrets.DBNAME}}
+#             TEST_DBNAME: ${{secrets.TEST_DBNAME}}
+#             SECRET: ${{secrets.SECRET}}
+#             CLUSTER: ${{secrets.CLUSTER}}
+#         steps:
+#             - name: Git checkout
+#               uses: actions/checkout@v2
 
-            - name: Install modules
-              run: npm ci
+#             - name: Install modules
+#               run: npm ci
 
-            - name: Testing
-              run: npm run test
+#             - name: Testing
+#               run: npm run test
 
