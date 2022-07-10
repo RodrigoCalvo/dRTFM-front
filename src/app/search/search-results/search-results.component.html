@@ -1,1 +1,5 @@
-<p>search-results works!</p>
+<ul>
+  <li *ngFor="let doc of searchArray">
+    <a routerLink="/details/{{ doc._id }}">{{ doc.title }}</a>
+  </li>
+</ul>
