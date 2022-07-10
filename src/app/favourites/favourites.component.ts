@@ -2,19 +2,12 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-favourites',
-  template: `
-    <p>
-      favourites works!
-    </p>
-  `,
-  styles: [
-  ]
+  template: ` <app-header></app-header>
+    <app-favourites-menu></app-favourites-menu>`,
+  styles: [],
 })
 export class FavouritesComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
