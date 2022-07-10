@@ -1,1 +1,6 @@
-<p>user-form works!</p>
+<form>
+  <input type="text" name="name" [value]="{{currentUser.name}}" />
+  <input type="text" name="email" [value]="{{currentUser.email}}" />
+  <input type="password" name="password" />
+  <button type="submit">Guardar</button>
+</form>
