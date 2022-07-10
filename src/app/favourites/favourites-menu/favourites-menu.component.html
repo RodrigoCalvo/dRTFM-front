@@ -1,1 +1,14 @@
-<p>favourites-menu works!</p>
+<ul>
+  <li>
+    <h2>mis drtfm</h2>
+    <ul>
+      <li *ngFor="let doc of user.myDocuments">{{ doc.title }}</li>
+    </ul>
+  </li>
+  <li>
+    <h2>favoritos</h2>
+    <ul>
+      <li *ngFor="let doc of user.myFavs">{{ doc.title }}</li>
+    </ul>
+  </li>
+</ul>
