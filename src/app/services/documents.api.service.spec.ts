@@ -1,0 +1,157 @@
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { iDocument } from '../models/document.model';
+import { DocumentsApiService } from './documents.api.service';
+
+describe('Given document api service', () => {
+  let service: DocumentsApiService;
+  let httpTestingController: HttpTestingController;
+
+  const mockDocument: iDocument = {
+    title: '',
+    content: [],
+    keywords: [],
+    author: {
+      _id: '',
+      name: '',
+    },
+    visibility: 'public',
+  };
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+    });
+    service = TestBed.inject(DocumentsApiService);
+    httpTestingController = TestBed.inject(HttpTestingController);
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+
+  describe('When calling service.getDocuments', () => {
+    it('Should fetch the all documents from the api', () => {
+      service.getDocuments().subscribe((res) => {
+        expect(res).not.toBeNull();
+        expect(JSON.stringify(res)).toEqual(JSON.stringify({}));
+      });
+
+      const req = httpTestingController.expectOne({
+        method: 'GET',
+        url: 'http://localhost:9000/document/',
+      });
+
+      expect(req.request.url).toBe('http://localhost:9000/document/');
+
+      req.flush({});
+    });
+  });
+  describe('When calling service.getDocument with an id', () => {
+    it('Should fetch the matching document from the api', () => {
+      service.getDocument('id').subscribe((res) => {
+        expect(res).not.toBeNull();
+        expect(JSON.stringify(res)).toEqual(JSON.stringify({}));
+      });
+
+      const req = httpTestingController.expectOne({
+        method: 'GET',
+        url: 'http://localhost:9000/document/id',
+      });
+
+      expect(req.request.url).toBe('http://localhost:9000/document/id');
+
+      req.flush({});
+    });
+  });
+  describe('When calling service.searchDocument with an id', () => {
+    it('Should fetch the searched documents from the api', () => {
+      service.searchDocument('query').subscribe((res) => {
+        expect(res).not.toBeNull();
+        expect(JSON.stringify(res)).toEqual(JSON.stringify({}));
+      });
+
+      const req = httpTestingController.expectOne({
+        method: 'GET',
+        url: 'http://localhost:9000/document/search?q=query',
+      });
+
+      expect(req.request.url).toBe(
+        'http://localhost:9000/document/search?q=query'
+      );
+
+      req.flush({});
+    });
+  });
+  describe('When calling service.addDocument with an id', () => {
+    it('Should fetch the new document added to the api', () => {
+      service.addDocument(mockDocument).subscribe((res) => {
+        expect(res).not.toBeNull();
+        expect(JSON.stringify(res)).toEqual(JSON.stringify({}));
+      });
+
+      const req = httpTestingController.expectOne({
+        method: 'POST',
+        url: 'http://localhost:9000/document/',
+      });
+
+      expect(req.request.url).toBe('http://localhost:9000/document/');
+
+      req.flush({});
+    });
+  });
+  describe('When calling service.addFavourite with an id', () => {
+    it('Should fetch the added-to-favs document from the api', () => {
+      service.addFavourite('id').subscribe((res) => {
+        expect(res).not.toBeNull();
+        expect(JSON.stringify(res)).toEqual(JSON.stringify({}));
+      });
+
+      const req = httpTestingController.expectOne({
+        method: 'PATCH',
+        url: 'http://localhost:9000/document/fav/id',
+      });
+
+      expect(req.request.url).toBe('http://localhost:9000/document/fav/id');
+
+      req.flush({});
+    });
+  });
+  describe('When calling service.updateDocument with an id', () => {
+    it('Should fetch the updated document from the api', () => {
+      service.updateDocument('id', mockDocument).subscribe((res) => {
+        expect(res).not.toBeNull();
+        expect(JSON.stringify(res)).toEqual(JSON.stringify({}));
+      });
+
+      const req = httpTestingController.expectOne({
+        method: 'PATCH',
+        url: 'http://localhost:9000/document/id',
+      });
+
+      expect(req.request.url).toBe('http://localhost:9000/document/id');
+
+      req.flush({});
+    });
+  });
+  describe('When calling service.deleteDocument with an id', () => {
+    it('Should fetch the deleted document from the api', () => {
+      service.deleteDocument('id').subscribe((res) => {
+        expect(res).not.toBeNull();
+        expect(JSON.stringify(res)).toEqual(JSON.stringify({}));
+      });
+
+      const req = httpTestingController.expectOne({
+        method: 'DELETE',
+        url: 'http://localhost:9000/document/id',
+      });
+
+      expect(req.request.url).toBe('http://localhost:9000/document/id');
+
+      req.flush({});
+    });
+  });
+});
