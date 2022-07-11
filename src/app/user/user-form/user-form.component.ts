@@ -7,7 +7,7 @@ import { iUser } from 'src/app/models/user.model';
   styleUrls: ['./user-form.component.scss'],
 })
 export class UserFormComponent implements OnInit {
-  currentUser!: iUser;
+  currentUser: iUser = { name: 'test', email: 'tes@test.com' } as iUser; //data demo
   constructor() {}
 
   ngOnInit(): void {}

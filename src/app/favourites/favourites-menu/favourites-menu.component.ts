@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { iUser } from 'src/app/models/user.model';
+import { iDocument } from 'src/app/models/document.model';
+import { iDocumentWithoutAuthor, iUser } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-favourites-menu',
@@ -7,7 +8,10 @@ import { iUser } from 'src/app/models/user.model';
   styleUrls: ['./favourites-menu.component.scss'],
 })
 export class FavouritesMenuComponent implements OnInit {
-  user!: iUser;
+  user: iUser = {
+    myDocuments: [] as Array<iDocumentWithoutAuthor>,
+    myFavs: [] as Array<iDocument>,
+  } as iUser; //data demo
   constructor() {}
 
   ngOnInit(): void {}

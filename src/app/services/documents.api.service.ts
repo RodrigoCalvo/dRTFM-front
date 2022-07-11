@@ -12,12 +12,29 @@ export class DocumentsApiService {
     this.apiUrl = 'http://localhost:9000/document/';
   }
 
-  getDocuments(): Observable<Array<Document>> {
-    return this.http.get(this.apiUrl) as Observable<Array<Document>>;
+  getDocuments(): Observable<Array<iDocument>> {
+    return this.http.get(this.apiUrl) as Observable<Array<iDocument>>;
   }
 
-  addDocument(document: Document): Observable<Document> {
-    return this.http.post(this.apiUrl, document) as Observable<Document>;
+  getDocument(id: iDocument['_id']): Observable<Array<iDocument>> {
+    return this.http.get(this.apiUrl + id) as Observable<Array<iDocument>>;
+  }
+
+  searchDocument(query: string): Observable<Array<iDocument>> {
+    return this.http.get(this.apiUrl + 'search?q=' + query) as Observable<
+      Array<iDocument>
+    >;
+  }
+
+  addDocument(document: iDocument): Observable<iDocument> {
+    return this.http.post(this.apiUrl, document) as Observable<iDocument>;
+  }
+
+  addFavourite(id: iDocument['_id']): Observable<iDocument> {
+    return this.http.patch(
+      this.apiUrl + 'fav/' + id,
+      {}
+    ) as Observable<iDocument>;
   }
 
   updateDocument(

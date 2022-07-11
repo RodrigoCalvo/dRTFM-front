@@ -7,7 +7,12 @@ import { iDocument } from 'src/app/models/document.model';
   styleUrls: ['./details.component.scss'],
 })
 export class DetailsComponent implements OnInit {
-  @Input() document!: iDocument;
+  @Input() document: iDocument = {
+    title: 'test',
+    keywords: [''],
+    author: { _id: '', name: 'test' },
+    fork: '',
+  } as iDocument; // data demo
   constructor() {}
 
   ngOnInit(): void {}
