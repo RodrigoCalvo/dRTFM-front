@@ -21,7 +21,7 @@ export class DocumentsApiService {
   }
 
   searchDocument(query: string): Observable<Array<iDocument>> {
-    return this.http.get(this.apiUrl + 'search/' + query) as Observable<
+    return this.http.get(this.apiUrl + 'search?q=' + query) as Observable<
       Array<iDocument>
     >;
   }
@@ -31,7 +31,10 @@ export class DocumentsApiService {
   }
 
   addFavourite(id: iDocument['_id']): Observable<iDocument> {
-    return this.http.patch(this.apiUrl + id, {}) as Observable<iDocument>;
+    return this.http.patch(
+      this.apiUrl + 'fav/' + id,
+      {}
+    ) as Observable<iDocument>;
   }
 
   updateDocument(
