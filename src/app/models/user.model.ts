@@ -1,18 +1,34 @@
+import { iDocument, Visibility } from './document.model';
+
 export interface iUsersState {
   users: ReadonlyArray<iUser>;
 }
 export interface iCurrentUserState {
   user: iUser;
 }
+export interface iDocumentWithoutAuthor {
+  _id?: string;
+  title: string;
+  content: Array<{
+    text: string;
+    options: Array<{
+      key: string;
+      value: string | number;
+    }>;
+  }>;
+  keywords: Array<string>;
+  fork?: string;
+  visibility: Visibility;
+}
 
 export interface iUser {
   _id?: string;
   name: string;
   email: string;
-  password: string;
+  password?: string;
   photo: string;
-  myDocuments: Array<{ id: string; title: string }>;
-  myFavs: Array<{ id: string; title: string }>;
+  myDocuments: Array<iDocumentWithoutAuthor>;
+  myFavs: Array<iDocument>;
 }
 
 export class User implements iUser {
@@ -21,7 +37,7 @@ export class User implements iUser {
     public email: string,
     public password: string,
     public photo: string,
-    public myDocuments: Array<{ id: string; title: string }>,
-    public myFavs: Array<{ id: string; title: string }>
+    public myDocuments: Array<iDocumentWithoutAuthor>,
+    public myFavs: Array<iDocument>
   ) {}
 }

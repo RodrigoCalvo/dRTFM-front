@@ -1,4 +1,4 @@
-type Visibility = 'public' | 'private';
+export type Visibility = 'public' | 'private';
 
 export interface iDocumentsState {
   documents: ReadonlyArray<iDocument>;
@@ -11,7 +11,10 @@ export interface iDocument {
     options: Array<{ key: string; value: string | number }>;
   }>;
   keywords: Array<string>;
-  author: string;
+  author: {
+    _id: string;
+    name: string;
+  };
   fork?: string;
   visibility: Visibility;
 }
@@ -24,7 +27,10 @@ export class Document implements iDocument {
       options: Array<{ key: string; value: string | number }>;
     }>,
     public keywords: Array<string>,
-    public author: string,
+    public author: {
+      _id: string;
+      name: string;
+    },
     public visibility: Visibility
   ) {}
 }
