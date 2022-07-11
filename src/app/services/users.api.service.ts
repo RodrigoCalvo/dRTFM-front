@@ -12,18 +12,36 @@ export class UsersApiService {
     this.apiUrl = 'http://localhost:9000/user/';
   }
 
-  getUsers(): Observable<Array<User>> {
-    return this.http.get(this.apiUrl) as Observable<Array<User>>;
+  getUsers(): Observable<Array<iUser>> {
+    return this.http.get(this.apiUrl) as Observable<Array<iUser>>;
   }
 
-  addUser(user: User): Observable<User> {
-    return this.http.post(this.apiUrl, user) as Observable<User>;
+  getUser(id: iUser['_id']): Observable<iUser> {
+    return this.http.get(this.apiUrl + id) as Observable<iUser>;
   }
 
-  updateUser(id: iUser['_id'], user: User): Observable<User> {
-    return this.http.patch(this.apiUrl + id, user) as Observable<User>;
+  addUser(user: iUser): Observable<{ user: iUser; token: string }> {
+    return this.http.post(this.apiUrl, user) as Observable<{
+      user: iUser;
+      token: string;
+    }>;
   }
-  deleteUser(id: iUser['_id']): Observable<User> {
-    return this.http.delete(this.apiUrl + id) as Observable<User>;
+
+  loginUser(
+    email: iUser['email'],
+    password: iUser['password']
+  ): Observable<{ user: iUser; token: string }> {
+    return this.http.post(this.apiUrl + 'login', {
+      email,
+      password,
+    }) as Observable<{ user: iUser; token: string }>;
+  }
+
+  updateUser(id: iUser['_id'], user: iUser): Observable<iUser> {
+    return this.http.patch(this.apiUrl + id, user) as Observable<iUser>;
+  }
+
+  deleteSelfUser(): Observable<{ deleted: boolean }> {
+    return this.http.delete(this.apiUrl) as Observable<{ deleted: boolean }>;
   }
 }
