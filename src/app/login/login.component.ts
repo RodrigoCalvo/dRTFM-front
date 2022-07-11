@@ -4,8 +4,15 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-login',
   template: `
     <app-logo [size]="72"></app-logo>
-    <app-login-form> </app-login-form>
-    <app-register-form> </app-register-form>
+    <div *ngIf="!viewRegister; else register">
+      <app-login-form> </app-login-form>
+      <p><span (click)="toggleRegister()">Registrarse</span></p>
+    </div>
+    <ng-template #register>
+      <app-register-form> </app-register-form>
+      <p><span (click)="toggleRegister()">Volver</span></p>
+    </ng-template>
+    <p><a routerLink="/home">Continuar sin registro</a></p>
   `,
   styles: [],
 })
@@ -15,5 +22,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.viewRegister = false;
+  }
+
+  toggleRegister() {
+    this.viewRegister = !this.viewRegister;
   }
 }
