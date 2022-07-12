@@ -45,28 +45,24 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store
-      .select((state) => state.currentUser)
-      .subscribe({
+    const token = this.localStorage.getToken();
+    if (token) {
+      this.userApi.loginUser(undefined, token).subscribe({
         next: (data) => {
           if (data.token) {
-            this.userApi.loginUser(undefined, data.token).subscribe({
-              next: (data) => {
-                if (data.token) {
-                  this.store.dispatch(
-                    loadCurrentUser({
-                      currentUser: data.user,
-                      token: data.token,
-                    })
-                  );
-                  this.localStorage.saveToken(data.token);
-                  this.router.navigate(['home']);
-                }
-              },
-            });
+            this.store.dispatch(
+              loadCurrentUser({
+                currentUser: data.user,
+                token: data.token,
+              })
+            );
+            this.localStorage.saveToken(data.token);
+            this.router.navigate(['home']);
           }
         },
       });
+    }
+
     this.viewRegister = false;
   }
 
