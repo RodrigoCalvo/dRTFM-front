@@ -5,6 +5,7 @@ export interface iUsersState {
 }
 export interface iCurrentUserState {
   user: iUser;
+  token: string;
 }
 export interface iDocumentWithoutAuthor {
   _id?: string;
