@@ -26,7 +26,7 @@ export interface iUser {
   _id?: string;
   name: string;
   email: string;
-  password?: string;
+  password: string;
   photo: string;
   myDocuments: Array<iDocumentWithoutAuthor>;
   myFavs: Array<iDocument>;
