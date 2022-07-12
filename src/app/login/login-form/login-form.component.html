@@ -1,5 +1,16 @@
 <form>
-  <input type="text" name="email" placeholder="Email" />
-  <input type="password" name="password" placeholder="Contraseña" />
-  <button type="submit">Entrar</button>
+  <input
+    type="text"
+    name="email"
+    placeholder="Email"
+    [(ngModel)]="loginData.email"
+  />
+  <input
+    type="password"
+    name="password"
+    placeholder="Contraseña"
+    [(ngModel)]="loginData.password"
+  />
+  <p *ngIf="loginError">Usuario o contraseña inválidos</p>
+  <button type="submit" (click)="handleSubmit()">Entrar</button>
 </form>

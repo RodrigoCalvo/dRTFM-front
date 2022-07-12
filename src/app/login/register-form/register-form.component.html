@@ -1,11 +1,29 @@
 <form>
-  <input type="text" name="name" placeholder="Nombre" />
-  <input type="text" name="email" placeholder="Email" />
-  <input type="password" name="password" placeholder="Contraseña" />
+  <input
+    type="text"
+    name="name"
+    placeholder="Nombre"
+    [(ngModel)]="registerData.name"
+  />
+  <input
+    type="text"
+    name="email"
+    placeholder="Email"
+    [(ngModel)]="registerData.email"
+  />
+  <input
+    type="password"
+    name="password"
+    placeholder="Contraseña"
+    [(ngModel)]="registerData.password"
+  />
   <input
     type="password"
     name="passwordRepeat"
     placeholder="Repetir contraseña"
+    [(ngModel)]="registerData.rPassword"
   />
-  <button type="submit">Registrarse</button>
+  <p *ngIf="passwordError">Las contraseñas no coinciden</p>
+  <p *ngIf="emailError">El email no es válido o está en uso</p>
+  <button (click)="handleSubmit()" type="submit">Registrarse</button>
 </form>
