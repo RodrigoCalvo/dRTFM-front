@@ -40,9 +40,13 @@ export class UsersApiService {
         token: string;
       }>;
     } else if (token) {
-      return this.http.post(this.apiUrl + 'login', {
-        headers: { Authorization: 'Bearer ' + token },
-      }) as Observable<{
+      return this.http.post(
+        this.apiUrl + 'login',
+        {},
+        {
+          headers: { Authorization: 'Bearer ' + token },
+        }
+      ) as Observable<{
         user: iUser;
         token: string;
       }>;
