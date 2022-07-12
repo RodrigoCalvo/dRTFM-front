@@ -1,7 +1,21 @@
 h1 {
+  padding: 30px 30px;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 a {
   text-decoration: none;
+}
+.dont {
+  font-size: 3rem;
+  position: absolute;
+  transform: translateX(-85px) translateY(-20px) rotate(-20deg);
+  -webkit-text-stroke: 1px white;
+}
+.rtfm {
+  font-size: 4.5rem;
+}
+.read {
+  font-size: 1rem;
 }
