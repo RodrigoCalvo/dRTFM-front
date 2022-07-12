@@ -13,11 +13,11 @@ import { loadCurrentUser } from '../state/currentUser.reducer/currentUser.action
       <app-logo [size]="72"></app-logo>
       <div *ngIf="!viewRegister; else register">
         <app-login-form> </app-login-form>
-        <p><span (click)="toggleRegister()">Registrarse</span></p>
+        <p><span class="link" (click)="toggleRegister()">Registrarse</span></p>
       </div>
       <ng-template #register>
         <app-register-form> </app-register-form>
-        <p><span (click)="toggleRegister()">Volver</span></p>
+        <p><span class="link" (click)="toggleRegister()">Volver</span></p>
       </ng-template>
       <p><a routerLink="/home">Continuar sin registro</a></p>
     </div>
@@ -31,6 +31,9 @@ import { loadCurrentUser } from '../state/currentUser.reducer/currentUser.action
         align-items: center;
         margin: auto;
         width: 60vw;
+      }
+      .link {
+        cursor: pointer;
       }
     `,
   ],
