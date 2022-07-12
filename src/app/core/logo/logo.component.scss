@@ -11,11 +11,16 @@ a {
   font-size: 3rem;
   position: absolute;
   transform: translateX(-85px) translateY(-20px) rotate(-20deg);
-  -webkit-text-stroke: 1px white;
+  -webkit-text-stroke: 0.5px rgb(192, 192, 192);
+  font-family: "Atma", cursive;
+  font-weight: 400;
+  paint-order: stroke fill;
 }
 .rtfm {
   font-size: 4.5rem;
+  font-family: "Arvo", serif;
 }
 .read {
   font-size: 1rem;
+  font-family: "Arvo", serif;
 }
