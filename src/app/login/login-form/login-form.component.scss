@@ -1,9 +1,18 @@
 form {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  height: 6rem;
   margin: auto;
   width: 60vw;
+}
+
+input {
+  margin: 1rem;
+}
+
+p {
+  color: red;
+}
+button {
+  margin: 1rem;
 }
