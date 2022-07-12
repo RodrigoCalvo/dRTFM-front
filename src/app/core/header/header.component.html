@@ -1,4 +1,5 @@
 <header>
+  <!-- probar a arreglar esto con un solo logo y ngClass -->
   <a routerLink="/">
     <h1>
       <span class="dont">(dont)</span>
@@ -6,5 +7,10 @@
       <span class="read">(Read The F*cking Manual)</span>
     </h1>
   </a>
-  <a routerLink="/user"><img src="" alt="user profile" /></a>
+  <a *ngIf="logged; else loginButton" routerLink="/user"
+    ><img src="" alt="user profile"
+  /></a>
+  <ng-template #loginButton
+    ><button (click)="goLogin()">Login</button></ng-template
+  >
 </header>
