@@ -15,10 +15,10 @@ export class LoginFormComponent implements OnInit {
   loginData!: { email: string; password: string };
   loginError!: boolean;
   constructor(
-    private userApi: UsersApiService,
-    private store: Store<AppState>,
-    private router: Router,
-    private localStorage: LocalStorageService
+    public userApi: UsersApiService,
+    public store: Store<AppState>,
+    public router: Router,
+    public localStorage: LocalStorageService
   ) {}
 
   ngOnInit(): void {
