@@ -22,10 +22,10 @@ export class RegisterFormComponent implements OnInit {
   passwordError!: boolean;
   emailError!: boolean;
   constructor(
-    private userApi: UsersApiService,
-    private store: Store<AppState>,
-    private router: Router,
-    private localStorage: LocalStorageService
+    public userApi: UsersApiService,
+    public store: Store<AppState>,
+    public router: Router,
+    public localStorage: LocalStorageService
   ) {}
 
   ngOnInit(): void {

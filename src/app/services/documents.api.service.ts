@@ -8,7 +8,7 @@ import { Document, iDocument } from '../models/document.model';
 })
 export class DocumentsApiService {
   apiUrl: string;
-  constructor(private http: HttpClient) {
+  constructor(public http: HttpClient) {
     this.apiUrl = 'http://localhost:9000/document/';
   }
 

@@ -10,7 +10,7 @@ import { AppState } from 'src/app/state/app.state';
 })
 export class HeaderComponent implements OnInit {
   logged!: boolean;
-  constructor(private store: Store<AppState>, private router: Router) {}
+  constructor(public store: Store<AppState>, public router: Router) {}
 
   ngOnInit(): void {
     this.store

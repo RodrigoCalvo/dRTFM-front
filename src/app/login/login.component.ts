@@ -41,10 +41,10 @@ import { loadCurrentUser } from '../state/currentUser.reducer/currentUser.action
 export class LoginComponent implements OnInit {
   viewRegister!: boolean;
   constructor(
-    private userApi: UsersApiService,
-    private store: Store<AppState>,
-    private router: Router,
-    private localStorage: LocalStorageService
+    public userApi: UsersApiService,
+    public store: Store<AppState>,
+    public router: Router,
+    public localStorage: LocalStorageService
   ) {}
 
   ngOnInit(): void {

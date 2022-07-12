@@ -13,8 +13,8 @@ import { loadCurrentUser } from './state/currentUser.reducer/currentUser.action.
 export class AppComponent implements OnInit {
   title = 'drtfm';
   constructor(
-    private localStorage: LocalStorageService,
-    private store: Store<AppState>
+    public localStorage: LocalStorageService,
+    public store: Store<AppState>
   ) {}
   ngOnInit(): void {
     let token = this.localStorage.getToken();
