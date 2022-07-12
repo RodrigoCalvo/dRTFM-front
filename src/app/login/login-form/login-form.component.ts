@@ -40,6 +40,7 @@ export class LoginFormComponent implements OnInit {
         },
         error: (err) => {
           this.loginError = true;
+          this.loginData = { email: '', password: '' };
         },
       });
     }
