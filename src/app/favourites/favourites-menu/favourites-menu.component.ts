@@ -24,15 +24,15 @@ export class FavouritesMenuComponent implements OnInit {
 
     this.user = {
       myDocuments: [
-        { title: 'titulo 1' },
-        { title: 'titulo 2' },
-        { title: 'titulo 3' },
-        { title: 'titulo 4' },
+        { title: 'titulo 1', _id: '1' },
+        { title: 'titulo 2', _id: '2' },
+        { title: 'titulo 3', _id: '3' },
+        { title: 'titulo 4', _id: '4' },
       ] as Array<iDocumentWithoutAuthor>,
       myFavs: [
-        { title: 'titulo 1' },
-        { title: 'titulo 2' },
-        { title: 'titulo 3' },
+        { title: 'titulo 1', _id: '1' },
+        { title: 'titulo 2', _id: '2' },
+        { title: 'titulo 3', _id: '3' },
       ] as Array<iDocument>,
     } as iUser;
   }
