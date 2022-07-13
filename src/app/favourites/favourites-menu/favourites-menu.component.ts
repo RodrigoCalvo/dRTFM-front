@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { iDocument } from 'src/app/models/document.model';
 import { iDocumentWithoutAuthor, iUser } from 'src/app/models/user.model';
+import { AppState } from 'src/app/state/app.state';
 
 @Component({
   selector: 'app-favourites-menu',
@@ -8,11 +10,39 @@ import { iDocumentWithoutAuthor, iUser } from 'src/app/models/user.model';
   styleUrls: ['./favourites-menu.component.scss'],
 })
 export class FavouritesMenuComponent implements OnInit {
-  user: iUser = {
-    myDocuments: [] as Array<iDocumentWithoutAuthor>,
-    myFavs: [] as Array<iDocument>,
-  } as iUser; //data demo
-  constructor() {}
+  user!: iUser;
+  openedMyDocs!: boolean;
+  openedMyFavs!: boolean;
+  constructor(public store: Store<AppState>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.openedMyDocs = false;
+    this.openedMyFavs = false;
+    // this.store
+    //   .select((state) => state.currentUser)
+    //   .subscribe({ next: (data) => (this.user = data.user) });
+
+    this.user = {
+      myDocuments: [
+        { title: 'titulo 1', _id: '1' },
+        { title: 'titulo 2', _id: '2' },
+        { title: 'titulo 3', _id: '3' },
+        { title: 'titulo 4', _id: '4' },
+      ] as Array<iDocumentWithoutAuthor>,
+      myFavs: [
+        { title: 'titulo 1', _id: '1' },
+        { title: 'titulo 2', _id: '2' },
+        { title: 'titulo 3', _id: '3' },
+      ] as Array<iDocument>,
+    } as iUser;
+  }
+
+  toggleDocs() {
+    this.openedMyDocs = !this.openedMyDocs;
+    this.openedMyFavs = false;
+  }
+  toggleFavs() {
+    this.openedMyFavs = !this.openedMyFavs;
+    this.openedMyDocs = false;
+  }
 }
