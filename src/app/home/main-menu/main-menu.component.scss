@@ -1,0 +1,24 @@
+* {
+  box-sizing: content-box;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 90vw;
+}
+a {
+  padding: 1rem 0;
+  background-color: #f3f3f3;
+  margin: 8px;
+}
+li {
+  margin: 5px;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 500;
+  padding: 0 0 0 5vw;
+  width: 90vw;
+}
