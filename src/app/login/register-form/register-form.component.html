@@ -23,7 +23,6 @@
     placeholder="Repetir contraseña"
     [(ngModel)]="registerData.rPassword"
   />
-  <p *ngIf="passwordError">Las contraseñas no coinciden</p>
-  <p *ngIf="emailError">El email no es válido o está en uso</p>
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
   <button (click)="handleSubmit()" type="submit">Registrarse</button>
 </form>
