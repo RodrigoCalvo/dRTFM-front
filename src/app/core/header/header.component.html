@@ -7,10 +7,12 @@
       <span class="read">(Read The F*cking Manual)</span>
     </h1>
   </a>
-  <a *ngIf="logged; else loginButton" routerLink="/user"
-    ><img src="" alt="user profile"
+  <a class="user-login" *ngIf="logged; else loginButton" routerLink="/user"
+    ><img
+      src="https://images-na.ssl-images-amazon.com/images/I/71LgxJzwFKL._SL1500_.jpg"
+      alt="user profile"
   /></a>
   <ng-template #loginButton
-    ><button (click)="goLogin()">Login</button></ng-template
+    ><button class="user-login" (click)="goLogin()">Login</button></ng-template
   >
 </header>
