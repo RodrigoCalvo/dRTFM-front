@@ -9,7 +9,9 @@
       ></div>
     </h2>
     <ul *ngIf="openedMyDocs">
-      <li *ngFor="let doc of user.myDocuments | slice: 0:3">{{ doc.title }}</li>
+      <li *ngFor="let doc of user.myDocuments | slice: 0:3">
+        <a routerLink="/details/{{ doc._id }}">{{ doc.title }}</a>
+      </li>
       <li *ngIf="user.myDocuments.length > 3" class="view-more">
         <a routerLink="">Ver más</a>
       </li>
@@ -25,7 +27,9 @@
       ></div>
     </h2>
     <ul *ngIf="openedMyFavs">
-      <li *ngFor="let doc of user.myFavs | slice: 0:3">{{ doc.title }}</li>
+      <li *ngFor="let doc of user.myFavs | slice: 0:3">
+        <a routerLink="/details/{{ doc._id }}">{{ doc.title }}</a>
+      </li>
       <li *ngIf="user.myFavs.length > 3" class="view-more">
         <a routerLink="">Ver más</a>
       </li>
