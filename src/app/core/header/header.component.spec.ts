@@ -24,4 +24,12 @@ describe('HeaderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('When calling component.goLogin', () => {
+    it('Should navigate to the new user form page', () => {
+      spyOn(component.router, 'navigate');
+      component.goLogin();
+      expect(component.router.navigate).toHaveBeenCalled();
+    });
+  });
 });
