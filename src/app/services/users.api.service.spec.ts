@@ -13,6 +13,7 @@ describe('Given document api service', () => {
   const mockUser: iUser = {
     name: '',
     email: '',
+    password: '',
     photo: '',
     myDocuments: [],
     myFavs: [],
@@ -83,7 +84,7 @@ describe('Given document api service', () => {
   });
   describe('When calling service.loginUser', () => {
     it('Should fetch the matching user from the api', () => {
-      service.loginUser('', '').subscribe((res) => {
+      service.loginUser({ email: '', password: '' }, '').subscribe((res) => {
         expect(res).not.toBeNull();
         expect(JSON.stringify(res)).toEqual(JSON.stringify({}));
       });
