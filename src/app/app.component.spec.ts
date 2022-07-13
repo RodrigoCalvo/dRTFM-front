@@ -1,12 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { provideMockStore } from '@ngrx/store/testing'; //manual import
+import { mockInitialState } from './testing-mocks/mocks';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [AppComponent],
+      providers: [provideMockStore({ initialState: mockInitialState })],
     }).compileComponents();
   });
 
@@ -21,11 +24,27 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     expect(app.title).toEqual('drtfm');
   });
-  //
-  // it('should render title', () => {
-  //   const fixture = TestBed.createComponent(AppComponent);
-  //   fixture.detectChanges();
-  //   const compiled = fixture.nativeElement as HTMLElement;
-  //   expect(compiled.querySelector('.content span')?.textContent).toContain('drtfm app is running!');
-  // });
+
+  describe('When app is loaded with token in localStorage', () => {
+    it('should use store.dispatch to load the data', () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      const app = fixture.componentInstance;
+      spyOn(app.localStorage, 'getToken').and.returnValue('token');
+      spyOn(app.store, 'dispatch');
+      fixture.detectChanges();
+
+      expect(app.store.dispatch).toHaveBeenCalled();
+    });
+  });
+  describe('When app is loaded without token in localStorage', () => {
+    it('shouldnt use store.dispatch', () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      const app = fixture.componentInstance;
+      spyOn(app.localStorage, 'getToken').and.returnValue('');
+      spyOn(app.store, 'dispatch');
+      fixture.detectChanges();
+
+      expect(app.store.dispatch).not.toHaveBeenCalled();
+    });
+  });
 });

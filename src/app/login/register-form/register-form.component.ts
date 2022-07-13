@@ -19,8 +19,7 @@ export class RegisterFormComponent implements OnInit {
     password: string;
     rPassword: string;
   };
-  passwordError!: boolean;
-  emailError!: boolean;
+  errorMessage!: string;
   constructor(
     public userApi: UsersApiService,
     public store: Store<AppState>,
@@ -35,8 +34,7 @@ export class RegisterFormComponent implements OnInit {
       password: '',
       rPassword: '',
     };
-    this.passwordError = false;
-    this.emailError = false;
+    this.errorMessage = '';
   }
 
   handleSubmit() {
@@ -47,33 +45,51 @@ export class RegisterFormComponent implements OnInit {
       this.registerData.rPassword
     ) {
       if (this.registerData.password === this.registerData.rPassword) {
-        this.passwordError = false;
-        const newUser: iUser = {
-          name: this.registerData.name,
-          email: this.registerData.email,
-          password: this.registerData.password,
-          photo: '',
-          myDocuments: [],
-          myFavs: [],
-        };
-        this.userApi.addUser(newUser).subscribe({
-          next: (data) => {
-            if (data.token) {
-              this.store.dispatch(
-                loadCurrentUser({ currentUser: data.user, token: data.token })
-              );
-              this.localStorage.saveToken(data.token);
-              this.router.navigate(['home']);
-            }
-          },
-          error: (err) => {
-            this.emailError = true;
-            this.registerData.email = '';
-          },
-        });
+        if (this.registerData.password.length >= 4) {
+          if (this.isEmail(this.registerData.email)) {
+            const newUser: iUser = {
+              name: this.registerData.name,
+              email: this.registerData.email,
+              password: this.registerData.password,
+              photo: '',
+              myDocuments: [],
+              myFavs: [],
+            };
+            this.userApi.addUser(newUser).subscribe({
+              next: (data) => {
+                if (data.token) {
+                  this.store.dispatch(
+                    loadCurrentUser({
+                      currentUser: data.user,
+                      token: data.token,
+                    })
+                  );
+                  this.localStorage.saveToken(data.token);
+                  this.router.navigate(['home']);
+                }
+              },
+              error: (err) => {
+                this.errorMessage = 'El email ya está en uso';
+              },
+            });
+          } else {
+            this.errorMessage = 'El email es incorrecto';
+          }
+        } else {
+          this.errorMessage =
+            'La contraseña debe tener 4 caracteres como mínimo';
+        }
       } else {
-        this.passwordError = true;
+        this.errorMessage = 'Las contraseñas no coinciden';
       }
+    } else {
+      this.errorMessage =
+        'Los campos Nombre, Email y Contraseña son obligatorios';
     }
+  }
+
+  isEmail(email: string) {
+    const regex = /^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/;
+    return regex.test(email);
   }
 }
