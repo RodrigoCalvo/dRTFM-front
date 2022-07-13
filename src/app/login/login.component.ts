@@ -10,7 +10,7 @@ import { loadCurrentUser } from '../state/currentUser.reducer/currentUser.action
   selector: 'app-login',
   template: `
     <div>
-      <app-logo [size]="72"></app-logo>
+      <app-logo></app-logo>
       <div *ngIf="!viewRegister; else register">
         <app-login-form> </app-login-form>
         <p><span class="link" (click)="toggleRegister()">Registrarse</span></p>
