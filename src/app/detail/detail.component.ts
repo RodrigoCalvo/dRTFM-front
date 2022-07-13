@@ -13,5 +13,16 @@ export class DetailComponent implements OnInit {
   document!: iDocument;
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.document = {
+      title: '',
+      content: [],
+      keywords: [],
+      author: {
+        _id: '',
+        name: '',
+      },
+      visibility: 'public',
+    }; // demo data
+  }
 }
