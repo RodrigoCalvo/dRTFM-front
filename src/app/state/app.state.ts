@@ -7,12 +7,10 @@ import { usersReducer } from './users.reducer/users.reducer';
 
 export interface AppState {
   documents: iDocumentsState;
-  users: iUsersState;
   currentUser: iCurrentUserState;
 }
 
 export const ROOT_REDUCERS: ActionReducerMap<AppState> = {
   documents: documentsReducer,
-  users: usersReducer,
   currentUser: currentUserReducer,
 };
