@@ -19,6 +19,17 @@ export interface iDocument {
   visibility: Visibility;
 }
 
+export interface iDocumentDTO {
+  title: string;
+  content: Array<{
+    text: string;
+    options: Array<{ key: string; value: string | number }>;
+  }>;
+  keywords: Array<string>;
+  author: string;
+  visibility: Visibility;
+}
+
 export class Document implements iDocument {
   constructor(
     public title: string,

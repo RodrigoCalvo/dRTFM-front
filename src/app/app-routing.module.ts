@@ -16,6 +16,11 @@ const routes: Routes = [
       import('./login/login.module').then((m) => m.LoginModule),
   },
   {
+    path: 'create',
+    loadChildren: () =>
+      import('./create/create.module').then((m) => m.CreateModule),
+  },
+  {
     path: 'search',
     loadChildren: () =>
       import('./search/search.module').then((m) => m.SearchModule),
