@@ -3,18 +3,13 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-create',
   template: `
-    <p>
-      create works!
-    </p>
+    <app-header></app-header>
+    <app-create-form></app-create-form>
   `,
-  styles: [
-  ]
+  styles: [],
 })
 export class CreateComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
