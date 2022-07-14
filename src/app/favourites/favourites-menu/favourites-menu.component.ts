@@ -18,23 +18,9 @@ export class FavouritesMenuComponent implements OnInit {
   ngOnInit(): void {
     this.openedMyDocs = false;
     this.openedMyFavs = false;
-    // this.store
-    //   .select((state) => state.currentUser)
-    //   .subscribe({ next: (data) => (this.user = data.user) });
-
-    this.user = {
-      myDocuments: [
-        { title: 'titulo 1', _id: '1' },
-        { title: 'titulo 2', _id: '2' },
-        { title: 'titulo 3', _id: '3' },
-        { title: 'titulo 4', _id: '4' },
-      ] as Array<iDocumentWithoutAuthor>,
-      myFavs: [
-        { title: 'titulo 1', _id: '1' },
-        { title: 'titulo 2', _id: '2' },
-        { title: 'titulo 3', _id: '3' },
-      ] as Array<iDocument>,
-    } as iUser;
+    this.store
+      .select((state) => state.currentUser)
+      .subscribe({ next: (data) => (this.user = data.user) });
   }
 
   toggleDocs() {
