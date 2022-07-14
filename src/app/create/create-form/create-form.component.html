@@ -1,1 +1,28 @@
-<p>create-form works!</p>
+<h2>Crear DRTFM</h2>
+<p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+<form action="">
+  <div>
+    <input
+      type="text"
+      name="title"
+      [(ngModel)]="documentData.title"
+      placeholder="(título)"
+      maxlength="50"
+    />
+    <button (click)="handleSubmit()">✔</button>
+  </div>
+  <textarea
+    name="content"
+    [(ngModel)]="documentData.contentString"
+    rows="20"
+    maxlength="1000"
+    placeholder="(contenido)"
+    (keydown)="handleKeydown($event)"
+  ></textarea>
+  <input
+    type="text"
+    name="keywords"
+    [(ngModel)]="documentData.keywordsString"
+    placeholder="(palabras clave separadas por comas)"
+  />
+</form>
