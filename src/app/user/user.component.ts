@@ -10,7 +10,7 @@ import { AppState } from '../state/app.state';
   template: `
     <app-header></app-header>
     <app-user-form></app-user-form>
-    <p (click)="deleteAccount()" )>borrar cuenta</p>
+    <p (click)="deleteAccount()">borrar cuenta</p>
   `,
   styles: [],
 })
