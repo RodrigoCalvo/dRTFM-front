@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { iDocument, iDocumentDTO } from 'src/app/models/document.model';
-import {
-  iCurrentUserState,
-  iUser,
-  iUsersState,
-} from 'src/app/models/user.model';
+import { iDocumentDTO } from 'src/app/models/document.model';
+import { iCurrentUserState } from 'src/app/models/user.model';
 import { DocumentsApiService } from 'src/app/services/documents.api.service';
+import { LocalStorageService } from 'src/app/services/local.storage.service';
+import { UsersApiService } from 'src/app/services/users.api.service';
 import { AppState } from 'src/app/state/app.state';
+import {
+  clearCurrentUser,
+  loadCurrentUser,
+} from 'src/app/state/currentUser.reducer/currentUser.action.creators';
 import { addDocument } from 'src/app/state/documents.reducer/documents.action.creators';
 
 @Component({
@@ -27,6 +29,8 @@ export class CreateFormComponent implements OnInit {
   constructor(
     public store: Store<AppState>,
     public documentApi: DocumentsApiService,
+    public usersApi: UsersApiService,
+    public localStorage: LocalStorageService,
     public router: Router
   ) {}
 
@@ -59,17 +63,37 @@ export class CreateFormComponent implements OnInit {
           .subscribe({
             next: (data) => {
               this.store.dispatch(addDocument({ newDocument: data }));
+              this.usersApi
+                .loginUser(undefined, this.currentUserData.token)
+                .subscribe({
+                  // update store.currentUser w/ new myDoc
+                  next: (data) =>
+                    this.store.dispatch(
+                      loadCurrentUser({
+                        currentUser: data.user,
+                        token: data.token,
+                      })
+                    ),
+                });
               this.router.navigate(['/detail/' + data._id]);
             },
-            error: (err) => {}, //lanzar prompt de error en creación
+            error: (err) => {
+              this.errorMessage = 'Error en la creación del documento.';
+              this.documentData = {
+                title: '',
+                contentString: '',
+                keywordsString: '',
+              };
+            },
           });
       } else {
         this.errorMessage =
           'Los DRTFM deben tener al menos título y contenido.';
       }
-    }
-    {
-      //error de usuario, mostrar prompt y deslogear
+    } else {
+      this.localStorage.clearToken();
+      this.store.dispatch(clearCurrentUser());
+      this.router.navigate(['login']);
     }
   }
 
