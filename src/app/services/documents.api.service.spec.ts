@@ -3,21 +3,18 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { iDocument } from '../models/document.model';
+import { iDocument, iDocumentDTO } from '../models/document.model';
 import { DocumentsApiService } from './documents.api.service';
 
 describe('Given document api service', () => {
   let service: DocumentsApiService;
   let httpTestingController: HttpTestingController;
 
-  const mockDocument: iDocument = {
+  const mockDocument: iDocumentDTO = {
     title: '',
     content: [],
     keywords: [],
-    author: {
-      _id: '',
-      name: '',
-    },
+    author: '',
     visibility: 'public',
   };
 
@@ -88,7 +85,7 @@ describe('Given document api service', () => {
   });
   describe('When calling service.addDocument with an id', () => {
     it('Should fetch the new document added to the api', () => {
-      service.addDocument(mockDocument).subscribe((res) => {
+      service.addDocument(mockDocument, 'token').subscribe((res) => {
         expect(res).not.toBeNull();
         expect(JSON.stringify(res)).toEqual(JSON.stringify({}));
       });
@@ -105,7 +102,7 @@ describe('Given document api service', () => {
   });
   describe('When calling service.addFavourite with an id', () => {
     it('Should fetch the added-to-favs document from the api', () => {
-      service.addFavourite('id').subscribe((res) => {
+      service.addFavourite('id', 'token').subscribe((res) => {
         expect(res).not.toBeNull();
         expect(JSON.stringify(res)).toEqual(JSON.stringify({}));
       });
@@ -122,7 +119,7 @@ describe('Given document api service', () => {
   });
   describe('When calling service.updateDocument with an id', () => {
     it('Should fetch the updated document from the api', () => {
-      service.updateDocument('id', mockDocument).subscribe((res) => {
+      service.updateDocument('id', mockDocument, 'token').subscribe((res) => {
         expect(res).not.toBeNull();
         expect(JSON.stringify(res)).toEqual(JSON.stringify({}));
       });
@@ -139,7 +136,7 @@ describe('Given document api service', () => {
   });
   describe('When calling service.deleteDocument with an id', () => {
     it('Should fetch the deleted document from the api', () => {
-      service.deleteDocument('id').subscribe((res) => {
+      service.deleteDocument('id', 'token').subscribe((res) => {
         expect(res).not.toBeNull();
         expect(JSON.stringify(res)).toEqual(JSON.stringify({}));
       });

@@ -58,11 +58,19 @@ export class UsersApiService {
     }
   }
 
-  updateUser(id: iUser['_id'], user: iUser): Observable<iUser> {
-    return this.http.patch(this.apiUrl + id, user) as Observable<iUser>;
+  updateUser(
+    id: iUser['_id'],
+    user: iUser,
+    authToken: string
+  ): Observable<iUser> {
+    return this.http.patch(this.apiUrl + id, user, {
+      headers: { Authorization: 'Bearer ' + authToken },
+    }) as Observable<iUser>;
   }
 
-  deleteSelfUser(): Observable<{ deleted: boolean }> {
-    return this.http.delete(this.apiUrl) as Observable<{ deleted: boolean }>;
+  deleteSelfUser(authToken: string): Observable<{ deleted: boolean }> {
+    return this.http.delete(this.apiUrl, {
+      headers: { Authorization: 'Bearer ' + authToken },
+    }) as Observable<{ deleted: boolean }>;
   }
 }
