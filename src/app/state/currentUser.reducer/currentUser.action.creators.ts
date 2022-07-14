@@ -5,3 +5,6 @@ export const loadCurrentUser = createAction(
   '[CurrentUser Object] Load CurrentUser',
   props<{ currentUser: iUser; token: string }>()
 );
+export const clearCurrentUser = createAction(
+  '[CurrentUser Object] Clear CurrentUser'
+);

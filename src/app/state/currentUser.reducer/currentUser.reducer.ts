@@ -12,5 +12,6 @@ export const currentUserReducer = createReducer(
   on(ac.loadCurrentUser, (state, { currentUser, token }) => ({
     user: currentUser,
     token: token,
-  }))
+  })),
+  on(ac.clearCurrentUser, (state) => initialState)
 );
