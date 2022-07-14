@@ -49,7 +49,7 @@ export class CreateFormComponent implements OnInit {
   }
 
   handleSubmit() {
-    if (this.currentUserData.user) {
+    if (this.currentUserData.user._id) {
       if (this.documentData.title && this.documentData.contentString) {
         const newDocument: iDocumentDTO = {
           title: this.documentData.title,

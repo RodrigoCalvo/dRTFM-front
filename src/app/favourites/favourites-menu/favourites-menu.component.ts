@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { iDocument } from 'src/app/models/document.model';
-import { iDocumentWithoutAuthor, iUser } from 'src/app/models/user.model';
+import { iUser } from 'src/app/models/user.model';
 import { AppState } from 'src/app/state/app.state';
 
 @Component({
@@ -13,7 +13,7 @@ export class FavouritesMenuComponent implements OnInit {
   user!: iUser;
   openedMyDocs!: boolean;
   openedMyFavs!: boolean;
-  constructor(public store: Store<AppState>) {}
+  constructor(public store: Store<AppState>, public router: Router) {}
 
   ngOnInit(): void {
     this.openedMyDocs = false;
@@ -24,11 +24,19 @@ export class FavouritesMenuComponent implements OnInit {
   }
 
   toggleDocs() {
-    this.openedMyDocs = !this.openedMyDocs;
-    this.openedMyFavs = false;
+    if (!this.user._id) {
+      this.router.navigate(['login']);
+    } else {
+      this.openedMyDocs = !this.openedMyDocs;
+      this.openedMyFavs = false;
+    }
   }
   toggleFavs() {
-    this.openedMyFavs = !this.openedMyFavs;
-    this.openedMyDocs = false;
+    if (!this.user._id) {
+      this.router.navigate(['login']);
+    } else {
+      this.openedMyFavs = !this.openedMyFavs;
+      this.openedMyDocs = false;
+    }
   }
 }

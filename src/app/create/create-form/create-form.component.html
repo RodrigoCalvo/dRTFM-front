@@ -1,5 +1,8 @@
 <h2>Crear DRTFM</h2>
 <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+<p class="error-message" *ngIf="!currentUserData.user._id">
+  ADVERTENCIA: Usuario no logeado, los cambios no se guardarán.
+</p>
 <form action="">
   <div>
     <input
