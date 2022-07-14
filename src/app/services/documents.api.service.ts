@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Document, iDocument } from '../models/document.model';
+import { iDocument, iDocumentDTO } from '../models/document.model';
 
 @Injectable({
   providedIn: 'root',
@@ -26,24 +26,40 @@ export class DocumentsApiService {
     >;
   }
 
-  addDocument(document: iDocument): Observable<iDocument> {
-    return this.http.post(this.apiUrl, document) as Observable<iDocument>;
+  addDocument(
+    document: iDocumentDTO,
+    authToken: string
+  ): Observable<iDocument> {
+    return this.http.post(this.apiUrl, document, {
+      headers: { Authorization: 'Bearer ' + authToken },
+    }) as Observable<iDocument>;
   }
 
-  addFavourite(id: iDocument['_id']): Observable<iDocument> {
+  addFavourite(id: iDocument['_id'], authToken: string): Observable<iDocument> {
     return this.http.patch(
       this.apiUrl + 'fav/' + id,
-      {}
+      {},
+      {
+        headers: { Authorization: 'Bearer ' + authToken },
+      }
     ) as Observable<iDocument>;
   }
 
   updateDocument(
     id: iDocument['_id'],
-    document: Document
-  ): Observable<Document> {
-    return this.http.patch(this.apiUrl + id, document) as Observable<Document>;
+    document: iDocumentDTO,
+    authToken: string
+  ): Observable<iDocument> {
+    return this.http.patch(this.apiUrl + id, document, {
+      headers: { Authorization: 'Bearer ' + authToken },
+    }) as Observable<iDocument>;
   }
-  deleteDocument(id: iDocument['_id']): Observable<Document> {
-    return this.http.delete(this.apiUrl + id) as Observable<Document>;
+  deleteDocument(
+    id: iDocument['_id'],
+    authToken: string
+  ): Observable<iDocument> {
+    return this.http.delete(this.apiUrl + id, {
+      headers: { Authorization: 'Bearer ' + authToken },
+    }) as Observable<iDocument>;
   }
 }

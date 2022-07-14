@@ -130,7 +130,7 @@ describe('Given document api service', () => {
   });
   describe('When calling service.updateUser', () => {
     it('Should fetch the matching user from the api', () => {
-      service.updateUser('id', mockUser).subscribe((res) => {
+      service.updateUser('id', mockUser, 'token').subscribe((res) => {
         expect(res).not.toBeNull();
         expect(JSON.stringify(res)).toEqual(JSON.stringify({}));
       });
@@ -147,7 +147,7 @@ describe('Given document api service', () => {
   });
   describe('When calling service.deleteSelfUser', () => {
     it('Should fetch the matching user from the api', () => {
-      service.deleteSelfUser().subscribe((res) => {
+      service.deleteSelfUser('token').subscribe((res) => {
         expect(res).not.toBeNull();
         expect(JSON.stringify(res)).toEqual(JSON.stringify({}));
       });
