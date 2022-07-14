@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
@@ -13,9 +14,9 @@ describe('UserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [RouterTestingModule, HttpClientTestingModule],
       declarations: [UserComponent, HeaderComponent, UserFormComponent],
       providers: [provideMockStore({ initialState: mockInitialState })],
-      imports: [RouterTestingModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserComponent);
