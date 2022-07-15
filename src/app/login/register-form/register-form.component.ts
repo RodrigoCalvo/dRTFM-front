@@ -6,6 +6,7 @@ import { LocalStorageService } from 'src/app/services/local.storage.service';
 import { UsersApiService } from 'src/app/services/users.api.service';
 import { AppState } from 'src/app/state/app.state';
 import { loadCurrentUser } from 'src/app/state/currentUser.reducer/currentUser.action.creators';
+import { isEmail } from '../../helpers/isEmail';
 
 @Component({
   selector: 'app-register-form',
@@ -46,7 +47,7 @@ export class RegisterFormComponent implements OnInit {
     ) {
       if (this.registerData.password === this.registerData.rPassword) {
         if (this.registerData.password.length >= 4) {
-          if (this.isEmail(this.registerData.email)) {
+          if (isEmail(this.registerData.email)) {
             const newUser: iUser = {
               name: this.registerData.name,
               email: this.registerData.email,
@@ -86,10 +87,5 @@ export class RegisterFormComponent implements OnInit {
       this.errorMessage =
         'Los campos Nombre, Email y Contraseña son obligatorios';
     }
-  }
-
-  isEmail(email: string) {
-    const regex = /^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/;
-    return regex.test(email);
   }
 }
