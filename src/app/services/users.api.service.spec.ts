@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { iUser } from '../models/user.model';
 import { UsersApiService } from './users.api.service';
 
-describe('Given document api service', () => {
+describe('Given users api service', () => {
   let service: UsersApiService;
   let httpTestingController: HttpTestingController;
 
@@ -137,10 +137,10 @@ describe('Given document api service', () => {
 
       const req = httpTestingController.expectOne({
         method: 'PATCH',
-        url: 'http://localhost:9000/user/id',
+        url: 'http://localhost:9000/user/',
       });
 
-      expect(req.request.url).toBe('http://localhost:9000/user/id');
+      expect(req.request.url).toBe('http://localhost:9000/user/');
 
       req.flush({});
     });

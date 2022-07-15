@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Observable, of } from 'rxjs';
@@ -15,7 +16,7 @@ describe('CreateFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule],
+      imports: [RouterTestingModule, HttpClientTestingModule, FormsModule],
       declarations: [CreateFormComponent],
       providers: [provideMockStore({ initialState: mockInitialState })],
     }).compileComponents();
@@ -46,7 +47,10 @@ describe('CreateFormComponent', () => {
   });
   describe('When calling component.handleSubmit with user & document title and content and the api.addDocument is success', () => {
     it('should call store.dispatch and router.navigate', () => {
-      component.currentUserData = { user: {} as iUser, token: 'token' };
+      component.currentUserData = {
+        user: { _id: 'test' } as iUser,
+        token: 'token',
+      };
       component.documentData = {
         title: 'test',
         contentString: 'test',
@@ -71,7 +75,7 @@ describe('CreateFormComponent', () => {
   describe('When calling component.handleSubmit with no user', () => {
     it('should call store.dispatch, localStorage.clearToken and router.navigate', () => {
       component.currentUserData = {
-        user: null,
+        user: {} as iUser,
         token: 'token',
       } as unknown as {
         user: iUser;
@@ -90,7 +94,10 @@ describe('CreateFormComponent', () => {
   });
   describe('When calling component.handleSubmit with user but no document title or content', () => {
     it('should set component.errorMessage', () => {
-      component.currentUserData = { user: {} as iUser, token: 'token' };
+      component.currentUserData = {
+        user: { _id: 'test' } as iUser,
+        token: 'token',
+      };
       component.documentData = {
         title: '',
         contentString: 'test',
@@ -105,7 +112,10 @@ describe('CreateFormComponent', () => {
   });
   describe('When calling component.handleSubmit with user & document title and content and the api.addDocument fails', () => {
     it('should set component.errorMessage and empty the documendData', () => {
-      component.currentUserData = { user: {} as iUser, token: 'token' };
+      component.currentUserData = {
+        user: { _id: 'test' } as iUser,
+        token: 'token',
+      };
       component.documentData = {
         title: 'test',
         contentString: 'test',
