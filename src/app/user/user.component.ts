@@ -8,11 +8,31 @@ import { AppState } from '../state/app.state';
 @Component({
   selector: 'app-user',
   template: `
-    <app-header></app-header>
-    <app-user-form></app-user-form>
-    <p (click)="deleteAccount()">borrar cuenta</p>
+    <div>
+      <app-header></app-header>
+      <app-user-form></app-user-form>
+      <p (click)="deleteAccount()">borrar cuenta</p>
+    </div>
   `,
-  styles: [],
+  styles: [
+    `
+      div {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin: auto;
+        width: 60vw;
+      }
+      p {
+        color: red;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        margin: 1rem;
+        cursor: pointer;
+      }
+    `,
+  ],
 })
 export class UserComponent implements OnInit {
   constructor(

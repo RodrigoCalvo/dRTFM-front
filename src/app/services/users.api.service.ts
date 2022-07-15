@@ -58,12 +58,8 @@ export class UsersApiService {
     }
   }
 
-  updateUser(
-    id: iUser['_id'],
-    user: iUser,
-    authToken: string
-  ): Observable<iUser> {
-    return this.http.patch(this.apiUrl + id, user, {
+  updateUser(user: Partial<iUser>, authToken: string): Observable<iUser> {
+    return this.http.patch(this.apiUrl, user, {
       headers: { Authorization: 'Bearer ' + authToken },
     }) as Observable<iUser>;
   }
