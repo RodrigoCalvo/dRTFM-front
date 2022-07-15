@@ -1,7 +1,41 @@
-<form>
-  <input type="text" name="name" [value]="currentUser.name" />
-  <input type="text" name="email" [value]="currentUser.email" />
-  <input type="password" name="password" />
-  <button type="submit">Guardar</button>
-</form>
-<button (click)="logout()">Cerrar sesión</button>
+<section>
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  <form>
+    <input
+      type="text"
+      name="name"
+      [(ngModel)]="formData.name"
+      [disabled]="!editable"
+      placeholder="Nombre"
+    />
+    <input
+      type="text"
+      name="email"
+      [(ngModel)]="formData.email"
+      [disabled]="!editable"
+      placeholder="Email"
+    />
+    <input
+      type="password"
+      name="password"
+      [(ngModel)]="formData.password"
+      [disabled]="!editable"
+      placeholder="Nueva contraseña"
+    />
+    <input
+      type="password"
+      name="rPassword"
+      [(ngModel)]="formData.rPassword"
+      [disabled]="!editable"
+      placeholder="Repetir contraseña"
+    />
+    <div *ngIf="editable; else edit_button">
+      <button type="button" (click)="handleCancel()">Cancelar</button>
+      <button type="submit" (click)="handleSubmit()">Guardar</button>
+    </div>
+    <ng-template #edit_button>
+      <button (click)="toggleEditable()">Activar edición</button>
+    </ng-template>
+  </form>
+  <button (click)="logout()">Cerrar sesión</button>
+</section>
