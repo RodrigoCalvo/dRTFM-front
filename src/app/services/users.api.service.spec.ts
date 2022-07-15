@@ -130,7 +130,7 @@ describe('Given document api service', () => {
   });
   describe('When calling service.updateUser', () => {
     it('Should fetch the matching user from the api', () => {
-      service.updateUser('id', mockUser, 'token').subscribe((res) => {
+      service.updateUser(mockUser, 'token').subscribe((res) => {
         expect(res).not.toBeNull();
         expect(JSON.stringify(res)).toEqual(JSON.stringify({}));
       });
