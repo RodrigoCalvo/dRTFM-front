@@ -47,9 +47,7 @@ const routes: Routes = [
   {
     path: 'notFound',
     loadChildren: () =>
-      import('./core/not-found/not-found.component').then(
-        (m) => m.NotFoundComponent
-      ),
+      import('./not-found/not-found.module').then((m) => m.NotFoundModule),
   },
   { path: '**', redirectTo: 'notFound' },
 ];
