@@ -83,6 +83,7 @@ export class UserFormComponent implements OnInit {
                     })
                   );
                   this.editable = false;
+                  this.errorMessage = '';
                   this.currentUserData.user = data;
                 }
               },
