@@ -65,9 +65,7 @@ export class UserFormComponent implements OnInit {
             name: this.formData.name
               ? this.formData.name
               : this.currentUserData.user.name,
-            email: this.formData.email
-              ? this.formData.email
-              : this.currentUserData.user.email,
+            email: this.formData.email,
           };
           if (this.formData.password)
             updateUser.password = this.formData.password;
