@@ -1,0 +1,42 @@
+form {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 90vw;
+  min-height: 65vh;
+  & > textarea {
+    background-color: #d9d9d9;
+    margin: 1rem 0;
+    flex-grow: 2;
+    resize: none;
+    border-width: 2px;
+    border-style: inset;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    border-image: initial;
+  }
+  & > div {
+    display: flex;
+  }
+  & input {
+    background-color: #d9d9d9;
+  }
+}
+ul {
+  display: flex;
+  & > li {
+    margin: 0 0.4rem 0 0;
+  }
+}
+
+p.error-message {
+  text-align: center;
+  color: red;
+  font-size: 0.8rem;
+}
+
+.link {
+  text-decoration: underline;
+}
+label {
+  margin: 0 0.4rem 0 0;
+}
