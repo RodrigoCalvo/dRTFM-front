@@ -16,8 +16,8 @@ export class DocumentsApiService {
     return this.http.get(this.apiUrl) as Observable<Array<iDocument>>;
   }
 
-  getDocument(id: iDocument['_id']): Observable<Array<iDocument>> {
-    return this.http.get(this.apiUrl + id) as Observable<Array<iDocument>>;
+  getDocument(id: iDocument['_id']): Observable<iDocument> {
+    return this.http.get(this.apiUrl + id) as Observable<iDocument>;
   }
 
   searchDocument(query: string): Observable<Array<iDocument>> {
