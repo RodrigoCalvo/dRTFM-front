@@ -35,6 +35,16 @@ export class DocumentsApiService {
     }) as Observable<iDocument>;
   }
 
+  forkDocument(id: iDocument['_id'], authToken: string): Observable<iDocument> {
+    return this.http.post(
+      this.apiUrl + id,
+      {},
+      {
+        headers: { Authorization: 'Bearer ' + authToken },
+      }
+    ) as Observable<iDocument>;
+  }
+
   addFavourite(id: iDocument['_id'], authToken: string): Observable<iDocument> {
     return this.http.patch(
       this.apiUrl + 'fav/' + id,
@@ -47,7 +57,7 @@ export class DocumentsApiService {
 
   updateDocument(
     id: iDocument['_id'],
-    document: iDocumentDTO,
+    document: Partial<iDocumentDTO>,
     authToken: string
   ): Observable<iDocument> {
     return this.http.patch(this.apiUrl + id, document, {
