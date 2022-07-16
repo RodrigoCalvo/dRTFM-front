@@ -16,8 +16,8 @@ export class DocumentsApiService {
     return this.http.get(this.apiUrl) as Observable<Array<iDocument>>;
   }
 
-  getDocument(id: iDocument['_id']): Observable<Array<iDocument>> {
-    return this.http.get(this.apiUrl + id) as Observable<Array<iDocument>>;
+  getDocument(id: iDocument['_id']): Observable<iDocument> {
+    return this.http.get(this.apiUrl + id) as Observable<iDocument>;
   }
 
   searchDocument(query: string): Observable<Array<iDocument>> {
@@ -35,6 +35,16 @@ export class DocumentsApiService {
     }) as Observable<iDocument>;
   }
 
+  forkDocument(id: iDocument['_id'], authToken: string): Observable<iDocument> {
+    return this.http.post(
+      this.apiUrl + id,
+      {},
+      {
+        headers: { Authorization: 'Bearer ' + authToken },
+      }
+    ) as Observable<iDocument>;
+  }
+
   addFavourite(id: iDocument['_id'], authToken: string): Observable<iDocument> {
     return this.http.patch(
       this.apiUrl + 'fav/' + id,
@@ -47,7 +57,7 @@ export class DocumentsApiService {
 
   updateDocument(
     id: iDocument['_id'],
-    document: iDocumentDTO,
+    document: Partial<iDocumentDTO>,
     authToken: string
   ): Observable<iDocument> {
     return this.http.patch(this.apiUrl + id, document, {
