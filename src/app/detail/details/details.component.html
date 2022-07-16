@@ -1,7 +1,45 @@
-<form action="">
-  <input type="text" name="title" [value]="document.title" disabled />
-  <textarea name="content" disabled></textarea>
-  <input type="text" name="keywords" [value]="document.keywords" disabled />
-  <input type="text" name="author" [value]="document.author" disabled />
-  <input type="text" name="fork" [value]="document.fork" disabled />
+<p *ngIf="errorMessage">{{ errorMessage }}</p>
+<form *ngIf="!errorMessage" action="">
+  <div>
+    <input
+      type="text"
+      name="title"
+      [value]="document.title"
+      [readonly]="!editEnable"
+    />
+    <div *ngIf="!editEnable && isMine">
+      <button (click)="enableEdit()" type="button">✍🏻</button>
+      <button (click)="handleDelete()" type="button">🗑</button>
+    </div>
+    <div *ngIf="editEnable">
+      <button (click)="handleCancel()" type="button">✖</button>
+      <button (click)="handleSubmit()" type="button">✔</button>
+    </div>
+    <div *ngIf="!isMine">
+      <button (click)="handleFork()" type="button">🍴</button>
+    </div>
+  </div>
+  <textarea
+    name="content"
+    [value]="document.content[0].text"
+    [readonly]="!editEnable"
+  ></textarea>
+  <div>
+    <label>Palabras clave:</label>
+    <ul>
+      <li *ngFor="let word of document.keywords">
+        <span class="link">{{ word }}</span>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!isMine; else yesIsMine">
+    <label>Autor:</label>
+    <a href="/notFound"
+      ><span class="link">{{ document.author.name }}</span></a
+    >
+  </div>
+  <ng-template #yesIsMine> <div>Este documento es tuyo</div> </ng-template>
+  <div *ngIf="document.fork">
+    <label>Fork de:</label><span class="link">{{ document.fork }} /></span>
+  </div>
 </form>
