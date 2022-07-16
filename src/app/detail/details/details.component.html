@@ -1,10 +1,11 @@
-<p *ngIf="errorMessage">{{ errorMessage }}</p>
+<p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+<p class="editable" *ngIf="editEnable">Edición activada</p>
 <form *ngIf="!errorMessage" action="">
   <div>
     <input
       type="text"
       name="title"
-      [value]="document.title"
+      [(ngModel)]="documentData.title"
       [readonly]="!editEnable"
     />
     <div *ngIf="!editEnable && isMine">
@@ -21,10 +22,11 @@
   </div>
   <textarea
     name="content"
-    [value]="document.content[0].text"
+    [(ngModel)]="documentData.contentString"
     [readonly]="!editEnable"
+    (keydown)="handleKeydown($event)"
   ></textarea>
-  <div>
+  <div *ngIf="!editEnable; else editableKeywords">
     <label>Palabras clave:</label>
     <ul>
       <li *ngFor="let word of document.keywords">
@@ -32,6 +34,15 @@
       </li>
     </ul>
   </div>
+  <ng-template #editableKeywords
+    ><div>
+      <label for="keywords">Palabras clave:</label
+      ><input
+        name="keywords"
+        type="text"
+        [(ngModel)]="documentData.keywordsString"
+      /></div
+  ></ng-template>
   <div *ngIf="!isMine; else yesIsMine">
     <label>Autor:</label>
     <a href="/notFound"
