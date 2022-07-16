@@ -5,24 +5,12 @@ import { iDocument } from '../models/document.model';
   selector: 'app-detail',
   template: `
     <app-header></app-header>
-    <app-details [document]="document"></app-details>
+    <app-details></app-details>
   `,
   styles: [],
 })
 export class DetailComponent implements OnInit {
-  document!: iDocument;
   constructor() {}
 
-  ngOnInit(): void {
-    this.document = {
-      title: '',
-      content: [],
-      keywords: [],
-      author: {
-        _id: '',
-        name: '',
-      },
-      visibility: 'public',
-    }; // demo data
-  }
+  ngOnInit(): void {}
 }
