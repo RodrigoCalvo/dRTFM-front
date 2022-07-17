@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { iDocument } from 'src/app/models/document.model';
 
 @Component({
@@ -7,6 +8,7 @@ import { iDocument } from 'src/app/models/document.model';
   styleUrls: ['./search-bar.component.scss'],
 })
 export class SearchBarComponent implements OnInit {
+  search = new FormControl('');
   searchArray!: Array<iDocument>;
   constructor() {}
 

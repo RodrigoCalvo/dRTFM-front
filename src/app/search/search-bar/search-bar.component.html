@@ -1,2 +1,3 @@
-<input type="text" name="search" />
+<input type="text" name="search" [formControl]="search" />
+<p>{{ search.value }}</p>
 <app-search-results [searchArray]="searchArray"></app-search-results>

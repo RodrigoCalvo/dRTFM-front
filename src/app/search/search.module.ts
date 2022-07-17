@@ -6,9 +6,16 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { CoreModule } from '../core/core.module';
 import { RouterModule } from '@angular/router';
 import { SearchRoutingModule } from './search-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [SearchComponent, SearchBarComponent, SearchResultsComponent],
-  imports: [CommonModule, CoreModule, RouterModule, SearchRoutingModule],
+  imports: [
+    CommonModule,
+    CoreModule,
+    RouterModule,
+    SearchRoutingModule,
+    ReactiveFormsModule,
+  ],
 })
 export class SearchModule {}
