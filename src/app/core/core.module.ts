@@ -8,6 +8,6 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 @NgModule({
   declarations: [LogoComponent, HeaderComponent, ConfirmDialogComponent],
   imports: [CommonModule, RouterModule],
-  exports: [HeaderComponent, LogoComponent],
+  exports: [HeaderComponent, LogoComponent, ConfirmDialogComponent],
 })
 export class CoreModule {}
