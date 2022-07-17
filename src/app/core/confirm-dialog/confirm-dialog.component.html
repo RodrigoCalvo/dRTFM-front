@@ -1,7 +1,9 @@
-<div class="main">
-  <div class="dialog">{{ question }}</div>
-  <div class="buttons">
-    <button (click)="sendAccept()">Aceptar</button>
-    <button (click)="sendReject()">Cancelar</button>
+<div class="cover">
+  <div class="main">
+    <div class="dialog">{{ question }}</div>
+    <div class="buttons">
+      <button (click)="sendAnswer(true)">Aceptar</button>
+      <button (click)="sendAnswer(false)">Cancelar</button>
+    </div>
   </div>
 </div>
