@@ -1,13 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { iCurrentUserState } from '../models/user.model';
 import { LocalStorageService } from '../services/local.storage.service';
 import { UsersApiService } from '../services/users.api.service';
 import { AppState } from '../state/app.state';
+import { clearCurrentUser } from '../state/currentUser.reducer/currentUser.action.creators';
 
 @Component({
   selector: 'app-user',
   template: `
+    <app-confirm-dialog
+      *ngIf="showDeletePrompt"
+      [question]="deletePrompt"
+      (answer)="handleDeletePrompt($event)"
+    ></app-confirm-dialog>
     <div>
       <app-header></app-header>
       <app-user-form></app-user-form>
@@ -35,6 +42,10 @@ import { AppState } from '../state/app.state';
   ],
 })
 export class UserComponent implements OnInit {
+  currentUserData!: iCurrentUserState;
+  showDeletePrompt!: boolean;
+  deletePrompt: string =
+    'Confirma que deseas eliminar definitivamente tu cuenta y todos los documentos asociados a ella';
   constructor(
     public store: Store<AppState>,
     public usersApi: UsersApiService,
@@ -42,7 +53,23 @@ export class UserComponent implements OnInit {
     public router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.showDeletePrompt = false;
+  }
 
-  deleteAccount() {}
+  deleteAccount() {
+    this.showDeletePrompt = true;
+  }
+
+  handleDeletePrompt(answer: boolean) {
+    this.showDeletePrompt = false;
+    if (answer) {
+      this.usersApi.deleteSelfUser(this.currentUserData.token).subscribe({
+        next: (data) => {
+          this.store.dispatch(clearCurrentUser());
+          this.router.navigate(['login']);
+        },
+      });
+    }
+  }
 }

@@ -1,3 +1,13 @@
+<app-confirm-dialog
+  *ngIf="showForkPrompt"
+  [question]="forkPrompt"
+  (answer)="handleForkPrompt($event)"
+></app-confirm-dialog>
+<app-confirm-dialog
+  *ngIf="showDeletePrompt"
+  [question]="deletePrompt"
+  (answer)="handleDeletePrompt($event)"
+></app-confirm-dialog>
 <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
 <p class="editable" *ngIf="editEnable">Edición activada</p>
 <form *ngIf="!errorMessage" action="">
