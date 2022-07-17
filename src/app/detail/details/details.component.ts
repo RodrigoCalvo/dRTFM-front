@@ -28,6 +28,11 @@ export class DetailsComponent implements OnInit {
   errorMessage!: string;
   isMine!: boolean;
   editEnable!: boolean;
+  forkPrompt: string = 'Confirma que deseas copiar este documento a tu lista';
+  deletePrompt: string = 'Confirma que deseas borrar este documento';
+  showForkPrompt!: boolean;
+  showDeletePrompt!: boolean;
+
   constructor(
     public documentApi: DocumentsApiService,
     public store: Store<AppState>,
@@ -40,6 +45,8 @@ export class DetailsComponent implements OnInit {
     this.errorMessage = 'Cargando...';
     this.isMine = false;
     this.editEnable = false;
+    this.showForkPrompt = false;
+    this.showDeletePrompt = false;
     this.store
       .select((state) => state.documents)
       .subscribe({
@@ -92,12 +99,18 @@ export class DetailsComponent implements OnInit {
   }
 
   handleFork() {
-    // TODO: prompt de confirmación
-    this.documentApi
-      .forkDocument(this.document._id, this.currentUserData.token)
-      .subscribe({
-        next: (data) => this.router.navigate(['details/' + data._id]),
-      });
+    this.showForkPrompt = true;
+  }
+
+  handleForkPrompt(answer: boolean) {
+    this.showForkPrompt = false;
+    if (answer) {
+      this.documentApi
+        .forkDocument(this.document._id, this.currentUserData.token)
+        .subscribe({
+          next: (data) => this.router.navigate(['details/' + data._id]),
+        });
+    }
   }
 
   handleSubmit() {
@@ -131,17 +144,23 @@ export class DetailsComponent implements OnInit {
   }
 
   handleDelete() {
-    // TODO prompt de confirmación
-    this.documentApi
-      .deleteDocument(this.document._id, this.currentUserData.token)
-      .subscribe({
-        next: (data) => {
-          this.store.dispatch(
-            deleteDocument({ idToDelete: this.document._id })
-          );
-          this.router.navigate(['favs']);
-        },
-      });
+    this.showDeletePrompt = true;
+  }
+
+  handleDeletePrompt(answer: boolean) {
+    this.showDeletePrompt = false;
+    if (answer) {
+      this.documentApi
+        .deleteDocument(this.document._id, this.currentUserData.token)
+        .subscribe({
+          next: (data) => {
+            this.store.dispatch(
+              deleteDocument({ idToDelete: this.document._id })
+            );
+            this.router.navigate(['favs']);
+          },
+        });
+    }
   }
 
   prepareForm() {
