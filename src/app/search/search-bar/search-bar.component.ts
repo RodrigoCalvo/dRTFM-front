@@ -21,10 +21,17 @@ export class SearchBarComponent implements OnInit {
   constructor(
     public documentApi: DocumentsApiService,
     public store: Store<AppState>
-  ) {
+  ) {}
+
+  ngOnInit(): void {
+    this.setDelayMiddleware();
+    this.loadTopDocuments();
+  }
+
+  setDelayMiddleware() {
     this.delayMiddleware$.pipe(debounceTime(500)).subscribe({
       next: (search) => {
-        documentApi.searchDocument(search).subscribe({
+        this.documentApi.searchDocument(search).subscribe({
           next: (data) => {
             if (!data) {
               this.loadTopDocuments();
@@ -35,10 +42,6 @@ export class SearchBarComponent implements OnInit {
         });
       },
     });
-  }
-
-  ngOnInit(): void {
-    this.loadTopDocuments();
   }
 
   sendSearch() {
