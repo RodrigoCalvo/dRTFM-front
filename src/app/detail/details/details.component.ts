@@ -4,7 +4,9 @@ import { Store } from '@ngrx/store';
 import { iDocument, iDocumentDTO } from 'src/app/models/document.model';
 import { iCurrentUserState, iUsersState } from 'src/app/models/user.model';
 import { DocumentsApiService } from 'src/app/services/documents.api.service';
+import { UsersApiService } from 'src/app/services/users.api.service';
 import { AppState } from 'src/app/state/app.state';
+import { loadCurrentUser } from 'src/app/state/currentUser.reducer/currentUser.action.creators';
 import {
   addDocument,
   deleteDocument,
@@ -37,7 +39,8 @@ export class DetailsComponent implements OnInit {
     public documentApi: DocumentsApiService,
     public store: Store<AppState>,
     public router: Router,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public usersApi: UsersApiService
   ) {}
 
   ngOnInit(): void {
@@ -128,7 +131,6 @@ export class DetailsComponent implements OnInit {
       updatedDocument.keywords = this.documentData.keywordsString
         .split(',')
         .map((item) => item.trim());
-
     this.documentApi
       .updateDocument(
         this.document._id,
@@ -136,10 +138,23 @@ export class DetailsComponent implements OnInit {
         this.currentUserData.token
       )
       .subscribe({
-        next: (data) =>
+        next: (data) => {
           this.store.dispatch(
             updateDocument({ id: data._id, modifiedDocument: data })
           ),
+            this.usersApi
+              .loginUser(undefined, this.currentUserData.token)
+              .subscribe({
+                next: (data) =>
+                  this.store.dispatch(
+                    loadCurrentUser({
+                      currentUser: data.user,
+                      token: data.token,
+                    })
+                  ),
+              });
+          this.editEnable = false;
+        },
       });
   }
 
