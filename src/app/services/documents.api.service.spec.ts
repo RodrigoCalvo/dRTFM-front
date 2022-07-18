@@ -73,11 +73,11 @@ describe('Given document api service', () => {
 
       const req = httpTestingController.expectOne({
         method: 'GET',
-        url: 'http://localhost:9000/document/search?q=query',
+        url: 'http://localhost:9000/document/search?query=query&page=&limit=',
       });
 
       expect(req.request.url).toBe(
-        'http://localhost:9000/document/search?q=query'
+        'http://localhost:9000/document/search?query=query&page=&limit='
       );
 
       req.flush({});
