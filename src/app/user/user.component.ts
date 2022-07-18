@@ -67,6 +67,7 @@ export class UserComponent implements OnInit {
       this.usersApi.deleteSelfUser(this.currentUserData.token).subscribe({
         next: (data) => {
           this.store.dispatch(clearCurrentUser());
+          this.localStorage.clearToken();
           this.router.navigate(['login']);
         },
       });
