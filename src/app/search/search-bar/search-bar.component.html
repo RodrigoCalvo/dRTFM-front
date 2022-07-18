@@ -1,3 +1,23 @@
-<input type="text" name="search" [formControl]="search" />
-<p>{{ search.value }}</p>
-<app-search-results [searchArray]="searchArray"></app-search-results>
+<div>
+  <input
+    type="text"
+    name="search"
+    [formControl]="search"
+    (keyup)="sendSearch()"
+    placeholder="Buscar"
+  />
+
+  <div>
+    <ul>
+      <li>❤: El documento está en tus Favoritos</li>
+      <li>📌: El documento es tuyo</li>
+      <li>🍴: Has hecho fork del documento</li>
+    </ul>
+    <p *ngIf="search.value; else nonSearch">
+      Resultados para: {{ search.value }}
+    </p>
+    <ng-template #nonSearch><p>Documentos más valorados</p></ng-template>
+  </div>
+
+  <app-search-results [searchArray]="searchArray"></app-search-results>
+</div>
