@@ -1,2 +1,25 @@
-<input type="text" name="search" />
-<app-search-results [searchArray]="searchArray"></app-search-results>
+<div>
+  <fieldset>
+    <legend>Leyenda</legend>
+    <ul>
+      <li><i>❤</i>: El documento está en tus Favoritos</li>
+      <li><i>📌</i>: El documento es tuyo</li>
+      <li><i>🍴</i>: Has hecho fork del documento</li>
+    </ul>
+  </fieldset>
+
+  <input
+    type="text"
+    name="search"
+    [formControl]="search"
+    (keyup)="sendSearch()"
+    placeholder="Buscar"
+  />
+
+  <p *ngIf="search.value; else nonSearch">
+    Resultados para: {{ search.value }}
+  </p>
+  <ng-template #nonSearch><p>Documentos más valorados</p></ng-template>
+
+  <app-search-results [searchArray]="searchArray"></app-search-results>
+</div>

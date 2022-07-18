@@ -1,5 +1,10 @@
 <ul>
-  <li *ngFor="let doc of searchArray">
-    <a routerLink="/details/{{ doc._id }}">{{ doc.title }}</a>
-  </li>
+  <a *ngFor="let doc of searchArray" routerLink="/details/{{ doc._id }}"
+    ><li>
+      {{ doc.title }} <i *ngIf="checkIfItIs('fav', doc._id)">❤</i>
+      <i *ngIf="checkIfItIs('mine', doc._id)">📌</i>
+      <i *ngIf="checkIfItIs('fork', doc._id)">🍴</i>
+    </li>
+    <li></li
+  ></a>
 </ul>

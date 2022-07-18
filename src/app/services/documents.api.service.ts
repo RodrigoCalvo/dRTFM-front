@@ -20,10 +20,20 @@ export class DocumentsApiService {
     return this.http.get(this.apiUrl + id) as Observable<iDocument>;
   }
 
-  searchDocument(query: string): Observable<Array<iDocument>> {
-    return this.http.get(this.apiUrl + 'search?q=' + query) as Observable<
-      Array<iDocument>
-    >;
+  searchDocument(
+    query: string,
+    page?: string,
+    limit?: string
+  ): Observable<Array<iDocument>> {
+    return this.http.get(
+      this.apiUrl +
+        'search?query=' +
+        query +
+        '&page=' +
+        (page ? page : '') +
+        '&limit=' +
+        (limit ? limit : '')
+    ) as Observable<Array<iDocument>>;
   }
 
   addDocument(
