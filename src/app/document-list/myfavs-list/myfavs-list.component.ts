@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, debounceTime } from 'rxjs';
-import { iDocument } from 'src/app/models/document.model';
-import { iCurrentUserState } from 'src/app/models/user.model';
-import { AppState } from 'src/app/state/app.state';
+import { iDocument } from '../../models/document.model';
+import { iCurrentUserState } from '../../models/user.model';
+import { AppState } from '../../state/app.state';
 
 @Component({
   selector: 'app-myfavs-list',
@@ -26,10 +26,13 @@ export class MyfavsListComponent implements OnInit {
   setDelayMiddleware() {
     this.delayMiddleware$.pipe(debounceTime(500)).subscribe({
       next: (search) => {
-        this.showArray = this.currentUserData.user.myFavs.filter((item) =>
-          item.title.toLowerCase().includes(search.toLowerCase())
-        );
-        this.loadDocuments();
+        if (search.length > 2) {
+          this.showArray = this.currentUserData.user.myFavs.filter((item) =>
+            item.title.toLowerCase().includes(search.toLowerCase())
+          );
+        } else {
+          this.loadDocuments();
+        }
       },
     });
   }

@@ -5,8 +5,8 @@ import { BehaviorSubject, debounceTime } from 'rxjs';
 import {
   iCurrentUserState,
   iDocumentWithoutAuthor,
-} from 'src/app/models/user.model';
-import { AppState } from 'src/app/state/app.state';
+} from '../../models/user.model';
+import { AppState } from '../../state/app.state';
 
 @Component({
   selector: 'app-mydocs-list',
@@ -28,10 +28,13 @@ export class MydocsListComponent implements OnInit {
   setDelayMiddleware() {
     this.delayMiddleware$.pipe(debounceTime(500)).subscribe({
       next: (search) => {
-        this.showArray = this.currentUserData.user.myDocuments.filter((item) =>
-          item.title.toLowerCase().includes(search.toLowerCase())
-        );
-        this.loadDocuments();
+        if (search.length > 2) {
+          this.showArray = this.currentUserData.user.myDocuments.filter(
+            (item) => item.title.toLowerCase().includes(search.toLowerCase())
+          );
+        } else {
+          this.loadDocuments();
+        }
       },
     });
   }
