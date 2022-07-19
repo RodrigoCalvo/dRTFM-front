@@ -8,9 +8,8 @@ describe('ConfirmDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfirmDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfirmDialogComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfirmDialogComponent);
     component = fixture.componentInstance;
@@ -19,5 +18,15 @@ describe('ConfirmDialogComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('When calling component.sendAnswer', () => {
+    it('should call component.answer.emit function', () => {
+      spyOn(component.answer, 'emit');
+      fixture.detectChanges();
+
+      component.sendAnswer(true);
+      expect(component.answer.emit).toHaveBeenCalled();
+    });
   });
 });

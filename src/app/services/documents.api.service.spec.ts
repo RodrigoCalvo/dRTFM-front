@@ -64,7 +64,7 @@ describe('Given document api service', () => {
       req.flush({});
     });
   });
-  describe('When calling service.searchDocument with an id', () => {
+  describe('When calling service.searchDocument with only an id', () => {
     it('Should fetch the searched documents from the api', () => {
       service.searchDocument('query').subscribe((res) => {
         expect(res).not.toBeNull();
@@ -73,11 +73,30 @@ describe('Given document api service', () => {
 
       const req = httpTestingController.expectOne({
         method: 'GET',
-        url: 'http://localhost:9000/document/search?q=query',
+        url: 'http://localhost:9000/document/search?query=query&page=&limit=',
       });
 
       expect(req.request.url).toBe(
-        'http://localhost:9000/document/search?q=query'
+        'http://localhost:9000/document/search?query=query&page=&limit='
+      );
+
+      req.flush({});
+    });
+  });
+  describe('When calling service.searchDocument with an id, page & limit', () => {
+    it('Should fetch the searched documents from the api', () => {
+      service.searchDocument('query', '1', '11').subscribe((res) => {
+        expect(res).not.toBeNull();
+        expect(JSON.stringify(res)).toEqual(JSON.stringify({}));
+      });
+
+      const req = httpTestingController.expectOne({
+        method: 'GET',
+        url: 'http://localhost:9000/document/search?query=query&page=1&limit=11',
+      });
+
+      expect(req.request.url).toBe(
+        'http://localhost:9000/document/search?query=query&page=1&limit=11'
       );
 
       req.flush({});
@@ -96,6 +115,23 @@ describe('Given document api service', () => {
       });
 
       expect(req.request.url).toBe('http://localhost:9000/document/');
+
+      req.flush({});
+    });
+  });
+  describe('When calling service.forkDocument with an id', () => {
+    it('Should fetch the new document added to the api', () => {
+      service.forkDocument('id', 'token').subscribe((res) => {
+        expect(res).not.toBeNull();
+        expect(JSON.stringify(res)).toEqual(JSON.stringify({}));
+      });
+
+      const req = httpTestingController.expectOne({
+        method: 'POST',
+        url: 'http://localhost:9000/document/id',
+      });
+
+      expect(req.request.url).toBe('http://localhost:9000/document/id');
 
       req.flush({});
     });

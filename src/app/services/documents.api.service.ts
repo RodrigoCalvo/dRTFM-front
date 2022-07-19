@@ -24,7 +24,7 @@ export class DocumentsApiService {
     query: string,
     page?: string,
     limit?: string
-  ): Observable<Array<iDocument>> {
+  ): Observable<Array<iDocument> | undefined> {
     return this.http.get(
       this.apiUrl +
         'search?query=' +
@@ -33,7 +33,7 @@ export class DocumentsApiService {
         (page ? page : '') +
         '&limit=' +
         (limit ? limit : '')
-    ) as Observable<Array<iDocument>>;
+    ) as Observable<Array<iDocument> | undefined>;
   }
 
   addDocument(

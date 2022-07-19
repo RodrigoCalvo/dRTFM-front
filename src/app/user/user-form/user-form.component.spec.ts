@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Observable, of } from 'rxjs';
-import { iUser } from 'src/app/models/user.model';
-import { mockInitialState } from 'src/app/testing-mocks/mocks';
+import { iUser } from '../../models/user.model';
+import { mockInitialState } from '../../testing-mocks/mocks';
 
 import { UserFormComponent } from './user-form.component';
 
