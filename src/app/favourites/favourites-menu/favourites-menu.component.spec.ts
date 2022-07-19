@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
-import { iUser } from 'src/app/models/user.model';
-import { mockInitialState } from 'src/app/testing-mocks/mocks';
+import { iUser } from '../../models/user.model';
+import { mockInitialState } from '../../testing-mocks/mocks';
 
 import { FavouritesMenuComponent } from './favourites-menu.component';
 

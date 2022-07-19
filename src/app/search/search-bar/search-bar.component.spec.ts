@@ -4,8 +4,8 @@ import { FormControl } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
-import { iDocument } from 'src/app/models/document.model';
-import { mockInitialState } from 'src/app/testing-mocks/mocks';
+import { iDocument } from '../../models/document.model';
+import { mockInitialState } from '../../testing-mocks/mocks';
 import { SearchResultsComponent } from '../search-results/search-results.component';
 
 import { SearchBarComponent } from './search-bar.component';
