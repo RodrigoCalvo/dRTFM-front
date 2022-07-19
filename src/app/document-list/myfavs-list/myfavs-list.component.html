@@ -1,0 +1,25 @@
+<app-header></app-header>
+<div>
+  <input
+    type="text"
+    name="search"
+    [formControl]="search"
+    (keyup)="sendSearch()"
+    placeholder="Buscar"
+  />
+
+  <p *ngIf="search.value && search.value.length > 2; else nonSearch">
+    Favoritos - Resultados para: {{ search.value }}
+  </p>
+  <ng-template #nonSearch><p>Favoritos</p></ng-template>
+</div>
+<ul>
+  <a *ngFor="let doc of showArray" routerLink="/details/{{ doc._id }}"
+    ><li>
+      {{ doc.title }}
+      <i *ngIf="checkIfItIs('mine', doc._id)">📌</i>
+      <i *ngIf="checkIfItIs('fork', doc._id)">🍴</i>
+    </li>
+    <li></li
+  ></a>
+</ul>

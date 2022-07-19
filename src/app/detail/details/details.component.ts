@@ -141,18 +141,18 @@ export class DetailsComponent implements OnInit {
         next: (data) => {
           this.store.dispatch(
             updateDocument({ id: data._id, modifiedDocument: data })
-          ),
-            this.usersApi
-              .loginUser(undefined, this.currentUserData.token)
-              .subscribe({
-                next: (data) =>
-                  this.store.dispatch(
-                    loadCurrentUser({
-                      currentUser: data.user,
-                      token: data.token,
-                    })
-                  ),
-              });
+          );
+          this.usersApi
+            .loginUser(undefined, this.currentUserData.token)
+            .subscribe({
+              next: (data) =>
+                this.store.dispatch(
+                  loadCurrentUser({
+                    currentUser: data.user,
+                    token: data.token,
+                  })
+                ),
+            });
           this.editEnable = false;
         },
       });
