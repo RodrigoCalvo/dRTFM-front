@@ -13,7 +13,7 @@
         <a routerLink="/details/{{ doc._id }}">{{ doc.title }}</a>
       </li>
       <li *ngIf="user.myDocuments.length > 3" class="view-more">
-        <a routerLink="">Ver más</a>
+        <a routerLink="/documents/docs">Ver más</a>
       </li>
     </ul>
   </li>
@@ -31,7 +31,7 @@
         <a routerLink="/details/{{ doc._id }}">{{ doc.title }}</a>
       </li>
       <li *ngIf="user.myFavs.length > 3" class="view-more">
-        <a routerLink="">Ver más</a>
+        <a routerLink="/documents/favs">Ver más</a>
       </li>
     </ul>
   </li>
