@@ -8,7 +8,7 @@
     placeholder="Buscar"
   />
 
-  <p *ngIf="search.value; else nonSearch">
+  <p *ngIf="search.value && search.value.length > 2; else nonSearch">
     Mis DRTFM - Resultados para: {{ search.value }}
   </p>
   <ng-template #nonSearch><p>Mis DRTFM</p></ng-template>
