@@ -116,6 +116,64 @@ export class DetailsComponent implements OnInit {
     }
   }
 
+  handleFavourite() {
+    if (!this.isFavourite()) {
+      this.documentApi
+        .addFavourite(this.document._id, this.currentUserData.token)
+        .subscribe({
+          next: (data) => {
+            const updatedUser = {
+              ...this.currentUserData.user,
+              myFavs: [...this.currentUserData.user.myFavs, data],
+            };
+            this.store.dispatch(
+              loadCurrentUser({
+                currentUser: updatedUser,
+                token: this.currentUserData.token,
+              })
+            );
+            this.currentUserData = {
+              user: updatedUser,
+              token: this.currentUserData.token,
+            };
+          },
+        });
+    } else {
+      const updatedUser = {
+        ...this.currentUserData.user,
+        myFavs: [
+          ...this.currentUserData.user.myFavs.filter(
+            (item) => item._id !== this.document._id
+          ),
+        ],
+      };
+      this.usersApi
+        .updateUser(updatedUser, this.currentUserData.token)
+        .subscribe({
+          next: (data) => {
+            this.store.dispatch(
+              loadCurrentUser({
+                currentUser: data,
+                token: this.currentUserData.token,
+              })
+            );
+            this.currentUserData = {
+              user: data,
+              token: this.currentUserData.token,
+            };
+          },
+        });
+    }
+  }
+
+  isFavourite() {
+    return Boolean(
+      this.currentUserData.user.myFavs.find(
+        (item) => item._id === this.document._id
+      )
+    );
+  }
+
   handleSubmit() {
     const updatedDocument: Partial<iDocumentDTO> = {};
     if (this.documentData.title !== this.document.title)
