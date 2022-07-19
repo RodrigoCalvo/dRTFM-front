@@ -31,6 +31,13 @@ const routes: Routes = [
       import('./favourites/favourites.module').then((m) => m.FavouritesModule),
   },
   {
+    path: 'documents',
+    loadChildren: () =>
+      import('./document-list/document-list.module').then(
+        (m) => m.DocumentListModule
+      ),
+  },
+  {
     path: 'user',
     loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
   },
