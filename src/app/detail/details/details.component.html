@@ -28,6 +28,10 @@
     </div>
     <div *ngIf="!isMine">
       <button (click)="handleFork()" type="button">🍴</button>
+      <button (click)="handleFavourite()" type="button">
+        <span *ngIf="isFavourite()">❤</span>
+        <span *ngIf="!isFavourite()">🤍</span>
+      </button>
     </div>
   </div>
   <textarea
