@@ -4,44 +4,12 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
+import { AppState } from 'src/app/state/app.state';
 import { iDocument } from '../../models/document.model';
 import { iCurrentUserState, iUser } from '../../models/user.model';
-import { AppState } from '../../state/app.state';
 import { mockInitialState } from '../../testing-mocks/mocks';
 
 import { DetailsComponent } from './details.component';
-
-const mockDocument: iDocument = {
-  _id: 'test1',
-  title: 'test1',
-  content: [],
-  keywords: [],
-  author: {
-    _id: 'userId',
-    name: '',
-  },
-  visibility: 'public',
-};
-
-const fullMockInitialState: AppState = {
-  documents: {
-    documents: [
-      //mockDocument
-    ],
-  },
-  currentUser: {
-    user: {
-      _id: 'userId',
-      name: '',
-      email: '',
-      password: '',
-      photo: '',
-      myDocuments: [],
-      myFavs: [],
-    },
-    token: '',
-  },
-};
 
 describe('DetailsComponent', () => {
   let component: DetailsComponent;
@@ -51,13 +19,13 @@ describe('DetailsComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [DetailsComponent],
       providers: [
-        provideMockStore({ initialState: fullMockInitialState }),
+        provideMockStore({ initialState: mockInitialState }),
         {
           provide: ActivatedRoute,
           useValue: {
             snapshot: {
               paramMap: convertToParamMap({
-                id: 'test1',
+                id: 'test',
               }),
             },
           },
@@ -74,6 +42,22 @@ describe('DetailsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // describe('When component is loaded', () => {
+  //   it('should ', () => {
+  //     component.documentId = 'test';
+  //     spyOn(component.store, 'select').and.returnValue(
+  //       of({
+  //         documents: [{ _id: 'test' }, { _id: 'tset' }],
+  //         user: { _id: 'test' },
+  //       })
+  //     );
+  //     spyOn(component, 'prepareForm');
+  //     fixture.detectChanges();
+
+  //     expect(component.currentUserData).not.toBeUndefined();
+  //   });
+  // });
 
   describe('When calling component.enableEdit', () => {
     it('should set component.editEnable to true', () => {
@@ -116,6 +100,60 @@ describe('DetailsComponent', () => {
       component.handleForkPrompt(true);
 
       expect(component.router.navigate).toHaveBeenCalled();
+    });
+  });
+
+  describe('When calling component.handleFavourite with a false in isFavourite', () => {
+    it('should call store.dispatch', () => {
+      spyOn(component, 'isFavourite').and.returnValue(false);
+      spyOn(component.documentApi, 'addFavourite').and.returnValue(
+        of({} as iDocument)
+      );
+      component.document = { _id: 'test' } as iDocument;
+      component.currentUserData = {
+        user: { myFavs: [{} as iDocument] },
+        token: 'token',
+      } as iCurrentUserState;
+      spyOn(component.store, 'dispatch');
+      fixture.detectChanges();
+
+      component.handleFavourite();
+
+      expect(component.store.dispatch).toHaveBeenCalled();
+    });
+  });
+
+  describe('When calling component.handleFavourite with a true in isFavourite', () => {
+    it('should ', () => {
+      spyOn(component, 'isFavourite').and.returnValue(true);
+      component.document = { _id: 'test' } as iDocument;
+      component.currentUserData = {
+        user: {
+          myFavs: [{ _id: 'test' } as iDocument, { _id: 'tset' } as iDocument],
+        },
+        token: 'token',
+      } as iCurrentUserState;
+      spyOn(component.usersApi, 'updateUser').and.returnValue(of({} as iUser));
+      spyOn(component.store, 'dispatch');
+      fixture.detectChanges();
+
+      component.handleFavourite();
+
+      expect(component.store.dispatch).toHaveBeenCalled();
+    });
+  });
+
+  describe('When calling component.isFavourite', () => {
+    it('should return true if the document its on myFavs array', () => {
+      component.currentUserData = {
+        user: { myFavs: [{ _id: 'test' }] },
+      } as iCurrentUserState;
+      component.document = { _id: 'test' } as iDocument;
+      fixture.detectChanges();
+
+      const result = component.isFavourite();
+
+      expect(result).toBeTrue();
     });
   });
 
