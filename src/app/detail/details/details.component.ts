@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { iDocument, iDocumentDTO } from 'src/app/models/document.model';
-import { iCurrentUserState, iUsersState } from 'src/app/models/user.model';
+import { iCurrentUserState } from 'src/app/models/user.model';
 import { DocumentsApiService } from 'src/app/services/documents.api.service';
 import { UsersApiService } from 'src/app/services/users.api.service';
 import { AppState } from 'src/app/state/app.state';
