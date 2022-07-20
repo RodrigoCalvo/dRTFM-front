@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:cov": "ng test --code-coverage",
-    "test:gh": "ng test --watch --code-coverage --watch=false"
+    "test:gh": "ng test --watch --code-coverage --watch=false --browsers=ChromeHeadless"
   },
   "private": true,
   "dependencies": {
