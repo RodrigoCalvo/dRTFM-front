@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { iUser } from './models/user.model';
 import { LocalStorageService } from './services/local.storage.service';
 import { UsersApiService } from './services/users.api.service';
 import { AppState } from './state/app.state';

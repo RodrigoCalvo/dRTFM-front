@@ -6,9 +6,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Observable, of } from 'rxjs';
 import { AppState } from 'src/app/state/app.state';
-import { iDocument, iDocumentsState } from '../../models/document.model';
+import { iDocument } from '../../models/document.model';
 import { iCurrentUserState, iUser } from '../../models/user.model';
-import { mockInitialState } from '../../testing-mocks/mocks';
 
 import { DetailsComponent } from './details.component';
 
