@@ -50,6 +50,7 @@ export class DetailsComponent implements OnInit {
     this.editEnable = false;
     this.showForkPrompt = false;
     this.showDeletePrompt = false;
+    this.documentId = this.nothing(this.documentId);
     this.store
       .select((state) => state.documents)
       .subscribe({
@@ -256,5 +257,10 @@ export class DetailsComponent implements OnInit {
         eventTarget['value'].substring(end);
       eventTarget['selectionStart'] = eventTarget['selectionEnd'] = start + 1;
     }
+  }
+
+  // for testing purpouses
+  nothing(thing: string) {
+    return thing;
   }
 }

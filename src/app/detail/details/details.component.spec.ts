@@ -1,15 +1,51 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AppState } from 'src/app/state/app.state';
-import { iDocument } from '../../models/document.model';
+import { iDocument, iDocumentsState } from '../../models/document.model';
 import { iCurrentUserState, iUser } from '../../models/user.model';
 import { mockInitialState } from '../../testing-mocks/mocks';
 
 import { DetailsComponent } from './details.component';
+
+const mockFullInitialState: AppState = {
+  documents: {
+    documents: [
+      {
+        _id: 'test',
+        title: 'test',
+        content: [{ text: '', options: [{ key: '', value: '' }] }],
+        author: { _id: '', name: '' },
+        keywords: ['', '1'],
+        visibility: 'public',
+      },
+      {
+        _id: 'tset',
+        title: 'test',
+        content: [{ text: '', options: [{ key: '', value: '' }] }],
+        author: { _id: '', name: '' },
+        keywords: ['', '0'],
+        visibility: 'public',
+      } as iDocument,
+    ],
+  },
+  currentUser: {
+    user: {
+      _id: '',
+      email: '',
+      myDocuments: [],
+      myFavs: [],
+      name: '',
+      password: '',
+      photo: '',
+    } as iUser,
+    token: 'token',
+  },
+};
 
 describe('DetailsComponent', () => {
   let component: DetailsComponent;
@@ -19,7 +55,7 @@ describe('DetailsComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [DetailsComponent],
       providers: [
-        provideMockStore({ initialState: mockInitialState }),
+        provideMockStore({ initialState: mockFullInitialState }),
         {
           provide: ActivatedRoute,
           useValue: {
@@ -31,7 +67,7 @@ describe('DetailsComponent', () => {
           },
         },
       ],
-      imports: [RouterTestingModule, HttpClientTestingModule],
+      imports: [RouterTestingModule, HttpClientTestingModule, FormsModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DetailsComponent);
@@ -43,21 +79,120 @@ describe('DetailsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // describe('When component is loaded', () => {
-  //   it('should ', () => {
-  //     component.documentId = 'test';
-  //     spyOn(component.store, 'select').and.returnValue(
-  //       of({
-  //         documents: [{ _id: 'test' }, { _id: 'tset' }],
-  //         user: { _id: 'test' },
-  //       })
-  //     );
-  //     spyOn(component, 'prepareForm');
-  //     fixture.detectChanges();
+  //ngOnInit test
+  describe('When component is loaded', () => {
+    it('should ', () => {
+      const fixture = TestBed.createComponent(DetailsComponent);
+      const component = fixture.componentInstance;
+      component.documentId = 'test';
+      component.documentData = {
+        title: '',
+        contentString: '',
+        keywordsString: '',
+      };
+      component.currentUserData = {
+        user: {
+          _id: '',
+          email: '',
+          myDocuments: [],
+          myFavs: [],
+          name: '',
+          password: '',
+          photo: '',
+        } as iUser,
+        token: 'token',
+      };
+      spyOn(component.documentApi, 'getDocument').and.returnValue(
+        of({
+          _id: 'test',
+          title: 'test',
+          content: [{ text: '', options: [{ key: '', value: '' }] }],
+          author: { _id: '', name: '' },
+          keywords: ['', '2'],
+        } as iDocument)
+      );
+      fixture.detectChanges();
 
-  //     expect(component.currentUserData).not.toBeUndefined();
-  //   });
-  // });
+      component.ngOnInit();
+
+      expect(component.currentUserData).not.toBeUndefined();
+    });
+  });
+
+  describe('When component is loaded', () => {
+    it('should ', () => {
+      const fixture = TestBed.createComponent(DetailsComponent);
+      const component = fixture.componentInstance;
+      component.documentId = 'ttest1';
+      component.documentData = {
+        title: '',
+        contentString: '',
+        keywordsString: '',
+      };
+      spyOn(component, 'nothing').and.returnValue('notest');
+      component.currentUserData = {
+        user: {
+          _id: '',
+          email: '',
+          myDocuments: [],
+          myFavs: [],
+          name: '',
+          password: '',
+          photo: '',
+        } as iUser,
+        token: 'token',
+      };
+      spyOn(component.documentApi, 'getDocument').and.returnValue(
+        of({
+          _id: 'tesst',
+          title: 'test',
+          content: [{ text: '', options: [{ key: '', value: '' }] }],
+          author: { _id: '', name: '' },
+          keywords: ['', '2'],
+        } as iDocument)
+      );
+      fixture.detectChanges();
+
+      component.ngOnInit();
+
+      expect(component.currentUserData).not.toBeUndefined();
+    });
+  });
+  describe('When component is loaded', () => {
+    it('should ', () => {
+      const fixture = TestBed.createComponent(DetailsComponent);
+      const component = fixture.componentInstance;
+      component.documentId = 'ttest1';
+      component.documentData = {
+        title: '',
+        contentString: '',
+        keywordsString: '',
+      };
+      spyOn(component, 'nothing').and.returnValue('notest');
+      component.currentUserData = {
+        user: {
+          _id: '',
+          email: '',
+          myDocuments: [],
+          myFavs: [],
+          name: '',
+          password: '',
+          photo: '',
+        } as iUser,
+        token: 'token',
+      };
+      spyOn(component.documentApi, 'getDocument').and.returnValue(
+        new Observable(() => {
+          throw new Error();
+        })
+      );
+      fixture.detectChanges();
+
+      component.ngOnInit();
+
+      expect(component.errorMessage).toBe('Documento no encontrado.');
+    });
+  });
 
   describe('When calling component.enableEdit', () => {
     it('should set component.editEnable to true', () => {
