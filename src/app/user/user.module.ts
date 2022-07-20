@@ -5,7 +5,6 @@ import { UserFormComponent } from './user-form/user-form.component';
 import { CoreModule } from '../core/core.module';
 import { UserRoutingModule } from './user-routing.module';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [UserComponent, UserFormComponent],

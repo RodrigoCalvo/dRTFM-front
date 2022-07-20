@@ -5,7 +5,6 @@ import { BehaviorSubject, debounceTime } from 'rxjs';
 import { iDocument } from 'src/app/models/document.model';
 import { DocumentsApiService } from 'src/app/services/documents.api.service';
 import { AppState } from 'src/app/state/app.state';
-import { loadDocuments } from 'src/app/state/documents.reducer/documents.action.creators';
 
 @Component({
   selector: 'app-search-bar',

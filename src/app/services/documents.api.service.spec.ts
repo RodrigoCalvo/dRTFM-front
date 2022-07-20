@@ -3,7 +3,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { iDocument, iDocumentDTO } from '../models/document.model';
+import { iDocumentDTO } from '../models/document.model';
 import { DocumentsApiService } from './documents.api.service';
 
 describe('Given document api service', () => {
