@@ -54,6 +54,11 @@ export class UserComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.store
+      .select((state) => state.currentUser)
+      .subscribe({
+        next: (data) => (this.currentUserData = data),
+      });
     this.showDeletePrompt = false;
   }
 
