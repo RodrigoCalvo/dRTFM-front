@@ -23,25 +23,29 @@ export class SearchResultsComponent implements OnInit {
   }
 
   checkIfItIs(type: string, docId: string | undefined): boolean {
-    switch (type) {
-      case 'fav':
-        return Boolean(
-          this.currentUserData.user.myFavs.find((item) => item._id === docId)
-        );
-      case 'mine':
-        return Boolean(
-          this.currentUserData.user.myDocuments.find(
-            (item) => item._id === docId
-          )
-        );
-      case 'fork':
-        return Boolean(
-          this.currentUserData.user.myDocuments.find(
-            (item) => item.fork === docId
-          )
-        );
-      default:
-        return false;
+    if (this.currentUserData.token) {
+      switch (type) {
+        case 'fav':
+          return Boolean(
+            this.currentUserData.user.myFavs.find((item) => item._id === docId)
+          );
+        case 'mine':
+          return Boolean(
+            this.currentUserData.user.myDocuments.find(
+              (item) => item._id === docId
+            )
+          );
+        case 'fork':
+          return Boolean(
+            this.currentUserData.user.myDocuments.find(
+              (item) => item.fork === docId
+            )
+          );
+        default:
+          return false;
+      }
+    } else {
+      return false;
     }
   }
 }
