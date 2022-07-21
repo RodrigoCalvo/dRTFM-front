@@ -2,15 +2,21 @@
   <a *ngFor="let doc of searchArray" routerLink="/details/{{ doc._id }}"
     ><li>
       {{ doc.title }}
-      <i *ngIf="checkIfItIs('fav', doc._id)"
-        ><img src="../../../assets/favorite-filled.svg" alt="favourite"
-      /></i>
-      <i *ngIf="checkIfItIs('mine', doc._id)"
-        ><img src="../../../assets/property.svg" alt="property"
-      /></i>
-      <i *ngIf="checkIfItIs('fork', doc._id)"
-        ><img src="../../../assets/fork.svg" alt="fork"
-      /></i>
+      <img
+        *ngIf="checkIfItIs('fav', doc._id)"
+        src="../../../assets/favorite-filled.svg"
+        alt="favourite"
+      />
+      <img
+        *ngIf="checkIfItIs('mine', doc._id)"
+        src="../../../assets/property.svg"
+        alt="property"
+      />
+      <img
+        *ngIf="checkIfItIs('fork', doc._id)"
+        src="../../../assets/fork.svg"
+        alt="fork"
+      />
     </li>
     <li></li
   ></a>
