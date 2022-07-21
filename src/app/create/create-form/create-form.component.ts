@@ -75,7 +75,7 @@ export class CreateFormComponent implements OnInit {
                       })
                     ),
                 });
-              this.router.navigate(['/detail/' + data._id]);
+              this.router.navigate(['/details/' + data._id]);
             },
             error: (err) => {
               this.errorMessage = 'Error en la creación del documento.';
