@@ -101,4 +101,17 @@ describe('SearchResultsComponent', () => {
       expect(result).toBeFalse();
     });
   });
+  describe('When calling component.checkIfItIs without token', () => {
+    it('should return false', () => {
+      component.currentUserData = {
+        user: {} as iUser,
+        token: '',
+      };
+      fixture.detectChanges();
+
+      const result = component.checkIfItIs('', 'test');
+
+      expect(result).toBeFalse();
+    });
+  });
 });
