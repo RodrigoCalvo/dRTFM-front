@@ -44,13 +44,14 @@ export class DetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.documentId = this.route.snapshot.paramMap.get('id') as string;
+    this.documentId = this.nothing(
+      this.route.snapshot.paramMap.get('id') as string
+    );
     this.errorMessage = 'Cargando...';
     this.isMine = false;
     this.editEnable = false;
     this.showForkPrompt = false;
     this.showDeletePrompt = false;
-    this.documentId = this.nothing(this.documentId);
     this.store
       .select((state) => state.documents)
       .subscribe({
@@ -222,7 +223,6 @@ export class DetailsComponent implements OnInit {
   }
 
   handleDeletePrompt(answer: boolean) {
-    this.showDeletePrompt = false;
     if (answer) {
       this.documentApi
         .deleteDocument(this.document._id, this.currentUserData.token)
@@ -235,14 +235,17 @@ export class DetailsComponent implements OnInit {
           },
         });
     }
+    this.showDeletePrompt = false;
   }
 
   prepareForm() {
-    this.documentData = {
-      title: this.document.title,
-      contentString: this.document.content[0].text,
-      keywordsString: this.document.keywords.join(', '),
-    };
+    if (this.document) {
+      this.documentData = {
+        title: this.document.title,
+        contentString: this.document.content[0].text,
+        keywordsString: this.document.keywords.join(', '),
+      };
+    }
   }
 
   handleKeydown(event: KeyboardEvent) {
