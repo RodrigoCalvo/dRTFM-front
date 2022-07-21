@@ -71,6 +71,12 @@ describe('DetailsComponent', () => {
 
     fixture = TestBed.createComponent(DetailsComponent);
     component = fixture.componentInstance;
+
+    const obs = of(convertToParamMap({ id: 'test' }));
+    component.route = {
+      paramMap: obs,
+    } as ActivatedRoute;
+
     fixture.detectChanges();
   });
 
@@ -78,11 +84,8 @@ describe('DetailsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  //ngOnInit test
   describe('When component is loaded', () => {
     it('should ', () => {
-      const fixture = TestBed.createComponent(DetailsComponent);
-      const component = fixture.componentInstance;
       component.documentId = 'test';
       component.documentData = {
         title: '',
@@ -120,8 +123,6 @@ describe('DetailsComponent', () => {
 
   describe('When component is loaded', () => {
     it('should ', () => {
-      const fixture = TestBed.createComponent(DetailsComponent);
-      const component = fixture.componentInstance;
       component.documentId = 'ttest1';
       component.documentData = {
         title: '',
@@ -159,8 +160,38 @@ describe('DetailsComponent', () => {
   });
   describe('When component is loaded', () => {
     it('should ', () => {
-      const fixture = TestBed.createComponent(DetailsComponent);
-      const component = fixture.componentInstance;
+      component.documentId = 'ttest1';
+      component.documentData = {
+        title: '',
+        contentString: '',
+        keywordsString: '',
+      };
+      spyOn(component, 'nothing').and.returnValue('notest');
+      component.currentUserData = {
+        user: {
+          _id: '',
+          email: '',
+          myDocuments: [],
+          myFavs: [],
+          name: '',
+          password: '',
+          photo: '',
+        } as iUser,
+        token: 'token',
+      };
+      spyOn(component.documentApi, 'getDocument').and.returnValue(
+        of(null) as unknown as Observable<iDocument>
+      );
+      fixture.detectChanges();
+
+      component.ngOnInit();
+
+      expect(component.currentUserData).not.toBeUndefined();
+    });
+  });
+
+  describe('When component is loaded', () => {
+    it('should ', () => {
       component.documentId = 'ttest1';
       component.documentData = {
         title: '',
@@ -228,6 +259,9 @@ describe('DetailsComponent', () => {
       spyOn(component.documentApi, 'forkDocument').and.returnValue(
         of({ _id: '' } as iDocument)
       );
+      spyOn(component.usersApi, 'loginUser').and.returnValue(
+        of({ user: {} as iUser, token: '' })
+      );
       spyOn(component.router, 'navigate');
       fixture.detectChanges();
 
@@ -281,6 +315,7 @@ describe('DetailsComponent', () => {
     it('should return true if the document its on myFavs array', () => {
       component.currentUserData = {
         user: { myFavs: [{ _id: 'test' }] },
+        token: 'token',
       } as iCurrentUserState;
       component.document = { _id: 'test' } as iDocument;
       fixture.detectChanges();
@@ -288,6 +323,21 @@ describe('DetailsComponent', () => {
       const result = component.isFavourite();
 
       expect(result).toBeTrue();
+    });
+  });
+
+  describe('When calling component.isFavourite without token', () => {
+    it('should return true if the document its on myFavs array', () => {
+      component.currentUserData = {
+        user: { myFavs: [{ _id: 'test' }] },
+        token: '',
+      } as iCurrentUserState;
+      component.document = { _id: 'test' } as iDocument;
+      fixture.detectChanges();
+
+      const result = component.isFavourite();
+
+      expect(result).toBeFalse();
     });
   });
 
@@ -348,6 +398,19 @@ describe('DetailsComponent', () => {
 
       expect(component.store.dispatch).toHaveBeenCalled();
       expect(component.router.navigate).toHaveBeenCalled();
+    });
+  });
+
+  describe('When calling component.updateUserLogin', () => {
+    it('should set new data on component.currentUserData', () => {
+      spyOn(component.usersApi, 'loginUser').and.returnValue(
+        of({ user: {} as iUser, token: 'token1' })
+      );
+      fixture.detectChanges();
+
+      component.updateUserLogin();
+
+      expect(component.currentUserData.token).toBe('token1');
     });
   });
 
