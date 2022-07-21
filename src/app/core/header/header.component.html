@@ -8,9 +8,7 @@
     </h1>
   </a>
   <a class="user-login" *ngIf="logged; else loginButton" routerLink="/user"
-    ><img
-      src="https://images-na.ssl-images-amazon.com/images/I/71LgxJzwFKL._SL1500_.jpg"
-      alt="user profile"
+    ><img src="../../../assets/default-profile.jpg" alt="user profile"
   /></a>
   <ng-template #loginButton
     ><button class="user-login" (click)="goLogin()">Login</button></ng-template
