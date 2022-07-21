@@ -13,6 +13,7 @@
 <form *ngIf="!errorMessage" action="">
   <div>
     <input
+      *ngIf="documentData"
       type="text"
       name="title"
       [(ngModel)]="documentData.title"
@@ -49,6 +50,7 @@
     </div>
   </div>
   <textarea
+    *ngIf="documentData"
     name="content"
     [(ngModel)]="documentData.contentString"
     [readonly]="!editEnable"
@@ -56,7 +58,7 @@
   ></textarea>
   <div *ngIf="!editEnable; else editableKeywords">
     <label>Palabras clave:</label>
-    <ul>
+    <ul *ngIf="documentData">
       <li *ngFor="let word of document.keywords">
         <span class="link">{{ word }}</span>
       </li>
@@ -66,19 +68,21 @@
     ><div>
       <label for="keywords">Palabras clave:</label
       ><input
+        *ngIf="documentData"
         name="keywords"
         type="text"
         [(ngModel)]="documentData.keywordsString"
       /></div
   ></ng-template>
-  <div *ngIf="!isMine; else yesIsMine">
+  <div *ngIf="!isMine && document; else yesIsMine">
     <label>Autor:</label>
     <a href="/notFound"
       ><span class="link">{{ document.author.name }}</span></a
     >
   </div>
   <ng-template #yesIsMine> <div>Este documento es tuyo</div> </ng-template>
-  <div *ngIf="document.fork">
-    <label>Fork de:</label><span class="link">{{ document.fork }} /></span>
+  <div *ngIf="document && document.fork">
+    <label>Fork de:</label
+    ><span class="link" routerLink="../{{ document.fork }}">link</span>
   </div>
 </form>

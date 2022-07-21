@@ -20,13 +20,15 @@ export class FavouritesMenuComponent implements OnInit {
     this.openedMyFavs = false;
     this.store
       .select((state) => state.currentUser)
-      .subscribe({ next: (data) => (this.user = data.user) });
+      .subscribe({ next: (data) => (this.user = data.user) })
+      .unsubscribe();
   }
 
   toggleDocs() {
     if (!this.user._id) {
       this.router.navigate(['login']);
     } else {
+      this.ngOnInit();
       this.openedMyDocs = !this.openedMyDocs;
       this.openedMyFavs = false;
     }
@@ -35,6 +37,7 @@ export class FavouritesMenuComponent implements OnInit {
     if (!this.user._id) {
       this.router.navigate(['login']);
     } else {
+      this.ngOnInit();
       this.openedMyFavs = !this.openedMyFavs;
       this.openedMyDocs = false;
     }

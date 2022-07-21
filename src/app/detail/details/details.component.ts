@@ -34,6 +34,7 @@ export class DetailsComponent implements OnInit {
   deletePrompt: string = 'Confirma que deseas borrar este documento';
   showForkPrompt!: boolean;
   showDeletePrompt!: boolean;
+  willReload!: boolean;
 
   constructor(
     public documentApi: DocumentsApiService,
@@ -44,54 +45,66 @@ export class DetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.documentId = this.nothing(
-      this.route.snapshot.paramMap.get('id') as string
-    );
     this.errorMessage = 'Cargando...';
     this.isMine = false;
     this.editEnable = false;
     this.showForkPrompt = false;
     this.showDeletePrompt = false;
-    this.store
-      .select((state) => state.documents)
+    this.route.paramMap
       .subscribe({
         next: (data) => {
-          const docFind = data.documents.find(
-            (doc) => doc._id === this.documentId
-          );
-          if (docFind) {
-            this.document = docFind;
-            this.errorMessage = '';
-            this.prepareForm();
-            this.store
-              .select((state) => state.currentUser)
-              .subscribe({
-                next: (data) => {
-                  this.isMine = data.user._id === this.document.author._id;
-                  this.currentUserData = data;
-                },
-              });
-          } else {
-            this.documentApi.getDocument(this.documentId).subscribe({
+          this.documentId = this.nothing(data.get('id') as string);
+          this.store
+            .select((state) => state.documents)
+            .subscribe({
               next: (data) => {
-                this.document = data;
-                this.errorMessage = '';
-                this.prepareForm();
-                this.store.dispatch(addDocument({ newDocument: data }));
-                this.store
-                  .select((state) => state.currentUser)
-                  .subscribe({
+                const docFind = data.documents.find(
+                  (doc) => doc._id === this.documentId
+                );
+                if (docFind) {
+                  this.document = docFind;
+                  this.errorMessage = '';
+                  this.prepareForm();
+                  this.store
+                    .select((state) => state.currentUser)
+                    .subscribe({
+                      next: (data) => {
+                        this.isMine =
+                          data.user._id === this.document.author._id;
+                        this.currentUserData = data;
+                      },
+                    })
+                    .unsubscribe();
+                } else {
+                  this.documentApi.getDocument(this.documentId).subscribe({
                     next: (data) => {
-                      this.isMine = data.user._id === this.document.author._id;
-                      this.currentUserData = data;
+                      if (!data) this.router.navigate(['notFound']);
+                      this.document = data;
+                      this.errorMessage = '';
+                      this.prepareForm();
+                      this.store.dispatch(addDocument({ newDocument: data }));
+                      this.store
+                        .select((state) => state.currentUser)
+                        .subscribe({
+                          next: (data) => {
+                            this.isMine =
+                              data.user._id === this.document.author._id;
+                            this.currentUserData = data;
+                          },
+                        })
+                        .unsubscribe();
+                    },
+                    error: (err) => {
+                      this.errorMessage = 'Documento no encontrado.';
                     },
                   });
+                }
               },
-              error: (err) => (this.errorMessage = 'Documento no encontrado.'),
-            });
-          }
+            })
+            .unsubscribe();
         },
-      });
+      })
+      .unsubscribe();
   }
 
   enableEdit() {
@@ -113,7 +126,23 @@ export class DetailsComponent implements OnInit {
       this.documentApi
         .forkDocument(this.document._id, this.currentUserData.token)
         .subscribe({
-          next: (data) => this.router.navigate(['details/' + data._id]),
+          next: (data) => {
+            this.store.dispatch(addDocument({ newDocument: data }));
+            this.usersApi
+              .loginUser(undefined, this.currentUserData.token)
+              .subscribe({
+                next: (data2) => {
+                  this.store.dispatch(
+                    loadCurrentUser({
+                      currentUser: data2.user,
+                      token: data2.token,
+                    })
+                  );
+                  this.currentUserData = data2;
+                  this.router.navigate(['/documents/docs']);
+                },
+              });
+          },
         });
     }
   }
@@ -169,11 +198,15 @@ export class DetailsComponent implements OnInit {
   }
 
   isFavourite() {
-    return Boolean(
-      this.currentUserData.user.myFavs.find(
-        (item) => item._id === this.document._id
-      )
-    );
+    if (this.currentUserData.token) {
+      return Boolean(
+        this.currentUserData.user.myFavs.find(
+          (item) => item._id === this.document._id
+        )
+      );
+    } else {
+      return false;
+    }
   }
 
   handleSubmit() {
@@ -224,18 +257,31 @@ export class DetailsComponent implements OnInit {
 
   handleDeletePrompt(answer: boolean) {
     if (answer) {
+      this.router.navigate(['favs']);
       this.documentApi
         .deleteDocument(this.document._id, this.currentUserData.token)
         .subscribe({
           next: (data) => {
-            this.store.dispatch(
-              deleteDocument({ idToDelete: this.document._id })
-            );
-            this.router.navigate(['favs']);
+            this.store.dispatch(deleteDocument({ idToDelete: data._id }));
+            this.updateUserLogin();
           },
         });
     }
     this.showDeletePrompt = false;
+  }
+
+  updateUserLogin() {
+    this.usersApi.loginUser(undefined, this.currentUserData.token).subscribe({
+      next: (userData) => {
+        this.store.dispatch(
+          loadCurrentUser({
+            currentUser: userData.user,
+            token: userData.token,
+          })
+        );
+        this.currentUserData = userData;
+      },
+    });
   }
 
   prepareForm() {
