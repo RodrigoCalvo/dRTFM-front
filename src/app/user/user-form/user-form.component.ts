@@ -81,7 +81,10 @@ export class UserFormComponent implements OnInit {
                   );
                   this.editable = false;
                   this.errorMessage = '';
-                  this.currentUserData.user = data;
+                  this.currentUserData = {
+                    user: data,
+                    token: this.currentUserData.token,
+                  };
                 }
               },
               error: (err) => {
