@@ -19,18 +19,32 @@
       [readonly]="!editEnable"
     />
     <div *ngIf="!editEnable && isMine">
-      <button (click)="enableEdit()" type="button">✍🏻</button>
-      <button (click)="handleDelete()" type="button">🗑</button>
+      <button (click)="enableEdit()" type="button">
+        <img src="../../../assets/edit.svg" alt="edit" />
+      </button>
+      <button (click)="handleDelete()" type="button">
+        <img src="../../../assets/delete.svg" alt="delete" />
+      </button>
     </div>
     <div *ngIf="editEnable">
-      <button (click)="handleCancel()" type="button">✖</button>
-      <button (click)="handleSubmit()" type="button">✔</button>
+      <button (click)="handleCancel()" type="button">
+        <img src="../../../assets/discard.svg" alt="discard" />
+      </button>
+      <button (click)="handleSubmit()" type="button">
+        <img src="../../../assets/save.svg" alt="save" />
+      </button>
     </div>
     <div *ngIf="!isMine">
-      <button (click)="handleFork()" type="button">🍴</button>
+      <button (click)="handleFork()" type="button">
+        <img src="../../../assets/fork.svg" alt="fork" />
+      </button>
       <button (click)="handleFavourite()" type="button">
-        <span *ngIf="isFavourite()">❤</span>
-        <span *ngIf="!isFavourite()">🤍</span>
+        <span *ngIf="isFavourite()"
+          ><img src="../../../assets/favorite-filled.svg" alt="favourite"
+        /></span>
+        <span *ngIf="!isFavourite()"
+          ><img src="../../../assets/favorite-empty.svg" alt="notfavourite"
+        /></span>
       </button>
     </div>
   </div>
