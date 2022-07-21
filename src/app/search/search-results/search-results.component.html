@@ -1,9 +1,16 @@
 <ul>
   <a *ngFor="let doc of searchArray" routerLink="/details/{{ doc._id }}"
     ><li>
-      {{ doc.title }} <i *ngIf="checkIfItIs('fav', doc._id)">❤</i>
-      <i *ngIf="checkIfItIs('mine', doc._id)">📌</i>
-      <i *ngIf="checkIfItIs('fork', doc._id)">🍴</i>
+      {{ doc.title }}
+      <i *ngIf="checkIfItIs('fav', doc._id)"
+        ><img src="../../../assets/favorite-filled.svg" alt="favourite"
+      /></i>
+      <i *ngIf="checkIfItIs('mine', doc._id)"
+        ><img src="../../../assets/property.svg" alt="property"
+      /></i>
+      <i *ngIf="checkIfItIs('fork', doc._id)"
+        ><img src="../../../assets/fork.svg" alt="fork"
+      /></i>
     </li>
     <li></li
   ></a>
